@@ -1,3 +1,6 @@
+/**
+ * Ver. 3
+ */
 /*class Product {
   name;
   calories;
@@ -56,6 +59,9 @@ function solve(args) {
   return products;
 }*/
 
+/**
+ * Ver. 2
+ */
 function solve(args) {
   let arr = new Array(...args);
 
@@ -66,9 +72,13 @@ function solve(args) {
       accumulator[inputArr[currentIndex - 1]] = +currentVal;
     }
     return accumulator;
-  }, {}) 
+  }, {})
+
 }
 
+/**
+ * Ver. 1
+ */
 /*function solve(args) {
   let result = {};
   for (let index = 0; index < args.length; index+=2) {
