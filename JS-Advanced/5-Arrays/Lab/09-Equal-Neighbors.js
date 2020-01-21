@@ -1,56 +1,55 @@
 function solve(input) {
-  let matrix = new Array(...input);
-  let dupeCounter = 0;
+  const matrix = new Array(...input);
+  let duplicates = 0;
 
-  for (let row = 0; row < matrix[0].length; row++) {
+  for (let row = 0; row < matrix.length; row++) {
     for (let col = 0; col < matrix[row].length; col++) {
       let currentElement = matrix[row][col];
 
-      if (isMatch(
-        row,
-        col,
-        matrix,
-        currentElement,
-        isInBounds)) {
-
-        dupeCounter++;
-      }
+      duplicates += isMatch(
+                            row,
+                            col,
+                            matrix,
+                            currentElement,
+                            isInBounds)
     }
 
   }
 
   function isMatch(row, col, matrix, currentElement) {
+    let counter = 0;
 
     if (isInBounds(row + 1, col, matrix)) {
       if (currentElement === matrix[row + 1][col]) {
 
-        return true;
-
+        counter++;
       }
     }
 
     if (isInBounds(row, col - 1, matrix)) {
       if (currentElement === matrix[row][col - 1]) {
 
-        return true;
+        counter++;
       }
     }
 
-    return false;
+    return counter;
   }
 
   function isInBounds(row, col, matrix) {
 
-    return row >= 0 && row <= matrix[0].length - 1
-      && col >= 0 && col <= matrix[0][row].length - 1
+    return row >= 0 && row <= matrix.length - 1
+      && col >= 0 && col <= matrix[row].length - 1
 
   }
 
-  return dupeCounter;
+  return duplicates;
 }
 
 console.log(solve(
-  [['2', '2', '5', '7', '4',
-    '4', '0', '5', '3', '4',
-    '2', '5', '5', '4', '2']]
+  [
+    ['2', '2', '5', '7', '4'],
+    ['4', '0', '5', '3', '4'],
+    ['2', '5', '5', '4', '2']
+  ]
 ))

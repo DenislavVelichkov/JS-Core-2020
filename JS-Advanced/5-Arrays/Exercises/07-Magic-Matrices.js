@@ -5,8 +5,9 @@ function solve(input) {
 
     for (let row = 0; row < matrix.length; row++) {
         rowsSum += matrix[row].reduce((a, b) => a + b, 0);
+
         let rowCounter = 0;
-        for (let col = 0; col < matrix[0].length; col++) {
+        for (let col = 0; col < matrix.length; col++) {
             while (rowCounter < matrix.length) {
                 colsSum += parseInt(matrix[rowCounter][col]);
                 rowCounter++
