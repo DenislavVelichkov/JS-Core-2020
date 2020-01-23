@@ -3,6 +3,7 @@ function solve(input = []) {
     let matrix = [[false, false, false], [false, false, false], [false, false, false]];
 
     while (input.length !== 0) {
+        
         if (playerTurn++ % 2 !== 0) {
             let playerOneTurn = input.shift().split(" ");
             if (isPlaceTaken(playerOneTurn[0], playerOneTurn[1], matrix)) {
@@ -49,7 +50,7 @@ function solve(input = []) {
                 completeRow = matrix[row]
                     .reduce((acc, val) => {
                         acc += val === currentPlayer ? 1 : 0;
-                        return acc
+                        return acc;
                     }, 0);
                 if (completeRow !== 3) {
                     completeRow = 0
@@ -74,20 +75,25 @@ function solve(input = []) {
         }
 
         function isMatrixFilled(matrix) {    
-            return matrix.reduce((acc, val) => acc)
+            for (const row in matrix) {
+                for (const col in matrix[row]) {
+                    if(matrix[row][col] === false) return false;
+                }
+            }
+
+            return true;
         }
     }
-
 }
 
-solve(["0 1",
+solve(["0 0",
     "0 0",
-    "0 2",
-    "2 0",
-    "1 0",
-    "1 2",
     "1 1",
-    "2 1",
+    "0 1",
+    "1 2",
+    "0 2",
     "2 2",
-    "0 0"]
+    "1 2",
+    "2 2",
+    "2 1"]
 )
