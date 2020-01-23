@@ -1,7 +1,6 @@
-function spiralMatrix(input) {
-    input = input[0].split(" ").map(Number);
-    let rows = input[0];
-    let cols = input[1];
+function spiralMatrix(...args) {
+    let rows = parseInt(args[0]);
+    let cols = parseInt(args[1]);
     let matrix = [];
 
     for (let i = 0; i < rows; i++) {
@@ -36,5 +35,7 @@ function spiralMatrix(input) {
         endCol--;
     }
 
-    console.log(matrix.map(row => row.join(" ")).join("\n"));
+    return matrix.map(row => row.join(" ")).join("\n");  
 }
+
+console.log(spiralMatrix(5, 5));
