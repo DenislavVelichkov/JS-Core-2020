@@ -1,9 +1,8 @@
 function solve(a) {
-    let sum = a;
-   
+    let acc = a;
     return function (b) {
-        return sum + b;
-    }
+        return acc + b;
+    };
 };
 
 let add5 = solve(5);

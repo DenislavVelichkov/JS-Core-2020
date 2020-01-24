@@ -23,3 +23,5 @@ function personalBMI(name, age, weight, height) {
 
     return result;
 }
+
+console.log(personalBMI("Honey Boo Boo", 9, 57, 137))
