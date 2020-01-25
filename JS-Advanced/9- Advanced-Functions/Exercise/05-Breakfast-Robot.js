@@ -58,11 +58,11 @@ let robot = (
             }
 
             return 'Success';
+        }
 
-            function returnTakenElements(indexOfMissingElement) {
-                for (let i = indexOfMissingElement - 1; i >= 0; i--) {
-                    requiredIngredients[i].element.quantity += requiredIngredients[i].amount;
-                }
+        function returnTakenElements(indexOfMissingElement) {
+            for (let i = indexOfMissingElement - 1; i >= 0; i--) {
+                requiredIngredients[i].element.quantity += requiredIngredients[i].amount;
             }
         }
 
