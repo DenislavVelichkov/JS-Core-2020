@@ -10,3 +10,5 @@ let add = (function () {
 
     return result
 })();
+
+console.log(add(1)(6)(-3))
