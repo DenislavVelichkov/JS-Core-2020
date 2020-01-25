@@ -1,18 +1,29 @@
-function solution(param) {
+function solution() {
     let result = '';
-    let commands = {
-        append: (param) => result += param,
-        removeStart: (param) => result = result.slice(0, Number(param)),
-        removeEnd: (param) => result = result.substr(result.length - 1 - Number(param), result.length),
-        print: () => console.log(result)
-    }
 
-    return commands;
+    return (function (param) {
+        
+        return {
+            append: (param) => result += param,
+            removeStart: (param) => result = result.substr(Number(param), result.length),
+            removeEnd: (param) => result = result.substr(0, result.length - Number(param)),
+            print: () => console.log(result)
+        }  
+    })()
 }
 
-let firstZeroTest = solution();
-firstZeroTest.append('hello');
-firstZeroTest.append('again');
-firstZeroTest.removeStart(3);
-firstZeroTest.removeEnd(4);
-firstZeroTest.print();
+let firstZero = solution();
+
+firstZero.append('hello');
+firstZero.append('again');
+firstZero.removeStart(3);
+firstZero.removeEnd(4);
+firstZero.print()
+
+let secondZeroTest = solution();
+
+secondZeroTest.append('123');
+secondZeroTest.append('45');
+secondZeroTest.removeStart(2);
+secondZeroTest.removeEnd(1);
+secondZeroTest.print();

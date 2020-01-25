@@ -25,7 +25,7 @@ let robot = (
                 { element: ingredients.carbohydrate, amount: quantity },
                 { element: ingredients.flavour, amount: quantity * 2 }
             ]),
-            coke: (quantity) => useRequiredIngredients([
+            lemonade: (quantity) => useRequiredIngredients([
                 { element: ingredients.carbohydrate, amount: quantity * 10 },
                 { element: ingredients.flavour, amount: quantity * 20 }
             ]),
@@ -34,12 +34,12 @@ let robot = (
                 { element: ingredients.fat, amount: quantity * 7 },
                 { element: ingredients.flavour, amount: quantity * 3 }
             ]),
-            omelet: (quantity) => useRequiredIngredients([
+            eggs: (quantity) => useRequiredIngredients([
                 { element: ingredients.protein, amount: quantity * 5 },
                 { element: ingredients.fat, amount: quantity },
                 { element: ingredients.flavour, amount: quantity }
             ]),
-            cheverme: (quantity) => useRequiredIngredients([
+            turkey: (quantity) => useRequiredIngredients([
                 { element: ingredients.protein, amount: quantity * 10 },
                 { element: ingredients.carbohydrate, amount: quantity * 10 },
                 { element: ingredients.fat, amount: quantity * 10 },
@@ -50,7 +50,7 @@ let robot = (
         function useRequiredIngredients(requiredIngredients) {
             for (let i = 0; i < requiredIngredients.length; i++) {
                 if (requiredIngredients[i].element.quantity < requiredIngredients[i].amount) {
-                    returnTakenElements(i);
+                    returnTakenElements(i, requiredIngredients);
                     return `Error: not enough ${requiredIngredients[i].element.name} in stock`;
                 }
 
@@ -60,7 +60,7 @@ let robot = (
             return 'Success';
         }
 
-        function returnTakenElements(indexOfMissingElement) {
+        function returnTakenElements(indexOfMissingElement, requiredIngredients) {
             for (let i = indexOfMissingElement - 1; i >= 0; i--) {
                 requiredIngredients[i].element.quantity += requiredIngredients[i].amount;
             }
@@ -101,3 +101,13 @@ let robot = (
     /* Judge Submission End */
 )() // IIFE - for local tests
 
+console.log(robot('prepare turkey 1'))
+console.log(robot('restock protein 10'))
+console.log(robot('prepare turkey 1'))
+console.log(robot('restock carbohydrate 10'))
+console.log(robot('prepare turkey 1'))
+console.log(robot('restock fat 10'))
+console.log(robot('prepare turkey 1'))
+console.log(robot('restock flavour 10'))
+console.log(robot('prepare turkey 1'))
+console.log(robot('report'))
