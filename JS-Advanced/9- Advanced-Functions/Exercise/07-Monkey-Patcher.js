@@ -1,4 +1,4 @@
-function monkeyPatcher(commandName) {
+function blog(commandName) {
     let balance = this.upvotes - this.downvotes;
     let totalVotes = this.upvotes + this.downvotes;
 
@@ -10,9 +10,8 @@ function monkeyPatcher(commandName) {
             let down = this.downvotes;
 
             if (totalVotes > 50) {
-                let valueToAdd = totalVotes > 50
-                    ? Math.ceil(Math.max(up, down) * 0.25)
-                    : 0;
+                let valueToAdd =
+                    Math.ceil(Math.max(up, down) * 0.25)
 
                 up += valueToAdd;
                 down += valueToAdd;
@@ -48,10 +47,6 @@ let post = {
     downvotes: 100
 };
 
-monkeyPatcher.call(post, 'upvote');
-monkeyPatcher.call(post, 'downvote');
-console.log(monkeyPatcher.call(post, 'score')); // [127, 127, 0, 'controversial']
-
-for (let i = 0; i < 50; i++) {
-    monkeyPatcher.call(post, 'downvote');
-}
+blog.call(post, 'upvote');
+blog.call(post, 'downvote');
+console.log(blog.call(post, 'score')); // [127, 127, 0, 'controversial']
