@@ -3,9 +3,9 @@ function createArticle() {
 	let inputText = document.getElementById("createContent");
 	let inputTitle = document.getElementById("createTitle");
 
-	if (!inputText.value || !inputTitle.value) { return alert("Please fill all fields!") }
+	if (!inputText.value || !inputTitle.value) { return;}
 	
-	let newArticle = document.createElement("div");
+	let newArticle = document.createElement("article");
 	let newTitle = document.createElement("h3")
 	newTitle.innerHTML = `${inputTitle.value}`;
 	let newContent = document.createElement("p")
