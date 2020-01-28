@@ -1,6 +1,7 @@
 function solve() {
   let textElement = document.getElementById("input");
-  let textToFormat = textElement.innerText.split(".");
+  let text = textElement.innerText;
+  let textToFormat = text.split(".");
   let output = document.getElementById("output");
   let sentenceCouner = 0;
 
@@ -17,5 +18,5 @@ function solve() {
 
     sentenceCouner++;
   }
-console.log(output.children.length)
+
 }
