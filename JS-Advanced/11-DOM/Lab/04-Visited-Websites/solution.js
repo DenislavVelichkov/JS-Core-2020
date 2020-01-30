@@ -1,17 +1,17 @@
 function solve() {
-  const links = document.querySelectorAll("a");
-  const visits = document.querySelectorAll("p");
+  const links = document.getElementsByTagName("a");
+  const visits = document.getElementsByTagName("p");
 
   for (let i = 0; i < links.length; i++) {
-    updateVisitors(links[i], visits[i]);
+    attachClickEvent(links[i], visits[i]);
   }
 
-  function updateVisitors(link, visit) {
+  function attachClickEvent(link, visits) {
     link.addEventListener("click", function (e) {
       e.preventDefault();
 
-      let count = parseInt(visit.innerHTML.replace(/^\D+/g, ''));
-      visit.innerHTML = `visited ${++count} times`;
+      let count = Number.parseInt(visits.innerHTML.match(/\d+/gm));
+      visits.innerHTML = visits.innerHTML.replace(/\d+/g, `${++count}`);
     })
   }
 }
