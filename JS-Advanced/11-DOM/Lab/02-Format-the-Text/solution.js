@@ -1,7 +1,7 @@
 function solve() {
     let textElement = document.getElementById("input");
-    let text = textElement.innerText;
-    let textToFormat = text.split(".");
+    let text = textElement.innerHTML;
+    let textToFormat = text.split(/[!.?]+/gm);
     let output = document.getElementById("output");
     let sentenceCouner = 0;
 
