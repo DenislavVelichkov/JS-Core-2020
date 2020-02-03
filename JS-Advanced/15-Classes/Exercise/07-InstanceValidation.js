@@ -64,6 +64,6 @@ class CheckingAccount {
 }
 
 let acc = new CheckingAccount('1314', 'ivan@some.com', 'Ivan', 'Petrov');
-let acc = new CheckingAccount('131455', 'ivan@', 'Ivan', 'Petrov');
-let acc = new CheckingAccount('131455', 'ivan@some.com', 'I', 'Petrov');
-let acc = new CheckingAccount('131455', 'ivan@some.com', 'Ivan', 'P3trov');
+// let acc = new CheckingAccount('131455', 'ivan@', 'Ivan', 'Petrov');
+// let acc = new CheckingAccount('131455', 'ivan@some.com', 'I', 'Petrov');
+// let acc = new CheckingAccount('131455', 'ivan@some.com', 'Ivan', 'P3trov');
