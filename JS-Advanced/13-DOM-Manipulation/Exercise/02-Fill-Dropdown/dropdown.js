@@ -1,14 +1,14 @@
 function addItem() {
-    const text = document.getElementById("newItemText").value;
-    const value = document.getElementById("newItemValue").value;
+    const text = document.getElementById("newItemText");
+    const value = document.getElementById("newItemValue");
     const menu = document.getElementById("menu");
     const option = document.createElement("option");
 
-    option.value = value;
-    option.innerHTML = text;
+    option.value = value.value;
+    option.innerHTML = text.value;
 
     menu.appendChild(option);
 
-    document.getElementById("newItemText").value = "";
-    document.getElementById("newItemValue").value = "";
+    text.value = "";
+    value.value = "";
 }
