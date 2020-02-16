@@ -5,7 +5,6 @@ function solve() {
    const totalPrice = document.querySelectorAll("h1")[1];
    const myProducts = document.querySelector("#myProducts ul");
    const buyButton = document.querySelector("#myProducts button")
-   let filterValue = document.querySelector("#filter").value;
    const filterButton = document.querySelector(".filter button");
 
    addElementButton.addEventListener("click", addProductHandler);
@@ -53,8 +52,20 @@ function solve() {
 
    function filterHandler(ev) {
       ev.preventDefault();
-      
 
+      for (const key in availableItems.children) {
+         const product = availableItems.children[key];
+         let name = product.querySelector("span").innerHTML;
+         let filterValue = document.querySelector("#filter").value;
+         let pattern = new RegExp(`${filterValue}`, "gm")
+
+         if(name.match(pattern)){
+            product.setAttribute("style", "display: block")
+         } else {
+            product.setAttribute("style", "display: none")
+         }
+
+      }
    }
 
    function buyAllProducts(ev) {
