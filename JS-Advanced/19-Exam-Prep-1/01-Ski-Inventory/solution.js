@@ -3,9 +3,14 @@ function solve() {
    const addElement = document.getElementById("add-new");
    const availableItems = document.querySelector("#products ul");
    const totalPrice = document.querySelectorAll("h1")[1];
-   const myProducts = document.getElementById("myProducts");
+   const myProducts = document.querySelector("#myProducts ul");
+   const buyButton = document.querySelector("#myProducts button")
+   let filterValue = document.querySelector("#filter").value;
+   const filterButton = document.querySelector(".filter button");
 
    addElementButton.addEventListener("click", addProductHandler);
+   buyButton.addEventListener("click", buyAllProducts);
+   filterButton.addEventListener("click", filterHandler);
 
    function addProductHandler(ev) {
       ev.preventDefault();
@@ -36,7 +41,7 @@ function solve() {
       if (availableCount - 1 <= 0) {
          availableItems.removeChild(this);
       }
-      
+
       this.querySelector("strong").innerHTML = `Available: ${availableCount - 1}`
       totalPrice.innerHTML = `Total Price: ${newPrice}`;
       let newElement = document.createElement("li");
@@ -44,6 +49,20 @@ function solve() {
       let productPrice = this.querySelector("div strong").innerText;
       newElement.innerHTML = `${productName}\n<strong>${productPrice}</strong>`;
       myProducts.appendChild(newElement);
+   }
+
+   function filterHandler(ev) {
+      ev.preventDefault();
+      
 
    }
+
+   function buyAllProducts(ev) {
+      ev.preventDefault();
+
+      let allChildren = document.querySelector("#myProducts ul");
+      allChildren.innerHTML = "";
+      totalPrice.innerHTML = "Total Price: 0.00"
+   }
+
 }
