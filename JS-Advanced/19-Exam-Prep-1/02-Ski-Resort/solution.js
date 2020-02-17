@@ -5,6 +5,7 @@ class SkiResort {
         this.voters = 0;
         this.hotels = [];
     }
+    
     get bestHotel() {
         if (this.voters === 0) {
             return "No votes yet";
