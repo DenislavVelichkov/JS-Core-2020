@@ -44,10 +44,12 @@ function solve() {
 
       this.querySelector("strong").innerHTML = `Available: ${availableCount - 1}`
       totalPrice.innerHTML = `Total Price: ${newPrice.toFixed(2)}`;
+
       let newElement = document.createElement("li");
       let productName = this.querySelector("span").innerText;
       let productPrice = this.querySelector("div strong").innerText;
       newElement.innerHTML = `${productName}\n<strong>${productPrice}</strong>\n`;
+
       let myProducts = document.querySelector("#myProducts ul");
       myProducts.appendChild(newElement);
    }
@@ -62,11 +64,9 @@ function solve() {
             const product = availableItems[key];
             let name = product.querySelector("span").innerText;
             // let pattern = new RegExp(`${filterValue}`, "gm")
-
             if (name.toLocaleLowerCase().includes(filterValue.value.toLocaleLowerCase())) {
                product.setAttribute("style", "display: block;")
                // product.parentNode.style.display = "block";
-
             } else {
                product.setAttribute("style", "display: none;")
                // product.parentNode.style.display = "none";
@@ -82,8 +82,8 @@ function solve() {
 
       let allChildren = document.querySelector("#myProducts ul");
       allChildren.innerHTML = "";
+
       let totalPrice = document.querySelectorAll("h1")[1];
       totalPrice.innerHTML = "Total Price: 0.00"
    }
-
 }
