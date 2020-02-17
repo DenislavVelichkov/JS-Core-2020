@@ -29,7 +29,7 @@ function solve() {
             let productPrice = e.target.parentNode.querySelector('strong').textContent;
             let productName = e.target.parentNode.parentNode.querySelector('span').textContent;
             let basketElement = document.createElement('li')
-            basketElement.innerText = productName;
+            basketElement.textContent = productName;
 
             let productQuantityCountRef = e.target.parentNode.parentNode.querySelector('strong');
             let parsedQuantity = Number(productQuantityCountRef.innerHTML.split(':')[1].trim())
@@ -40,7 +40,7 @@ function solve() {
             }
 
             let basketElementProductPrice = document.createElement('strong')
-            basketElementProductPrice.innerText = productPrice;
+            basketElementProductPrice.textContent = productPrice;
             basketElement.appendChild(basketElementProductPrice)
             myProductsList.appendChild(basketElement);
             priceSoFar += Number(productPrice);
@@ -52,7 +52,7 @@ function solve() {
         let filterValue = filterInput.value;
         Array.from(avaliableProductsList.children).forEach(el => {
             let productName = el.querySelector('span')
-            if (productName.innerText.toLowerCase().includes(filterValue.toLowerCase())) {
+            if (productName.textContent.toLowerCase().includes(filterValue.toLowerCase())) {
                 el.style.display = 'block'
             } else {
                 el.style.display = 'none'
@@ -67,10 +67,10 @@ function solve() {
         let newItemLine = document.createElement('li');
 
         let itemName = document.createElement('span');
-        itemName.innerText = itemInputs[0].value;
+        itemName.textContent = itemInputs[0].value;
 
         let itemQuantity = document.createElement('strong');
-        itemQuantity.innerText = `Available: ${itemInputs[1].value}`;
+        itemQuantity.textContent = `Available: ${itemInputs[1].value}`;
 
         newItemLine.appendChild(itemName);
         newItemLine.appendChild(itemQuantity);
@@ -78,10 +78,10 @@ function solve() {
         let priceContainer = document.createElement('div');
 
         let priceElement = document.createElement('strong');
-        priceElement.innerText = Number(itemInputs[2].value).toFixed(2);
+        priceElement.textContent = Number(itemInputs[2].value).toFixed(2);
 
         let addButton = document.createElement('button');
-        addButton.innerText = `Add to Client's List`;
+        addButton.textContent = `Add to Client's List`;
 
 
         priceContainer.appendChild(priceElement);

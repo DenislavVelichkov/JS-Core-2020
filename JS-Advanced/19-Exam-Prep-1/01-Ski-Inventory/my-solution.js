@@ -1,6 +1,6 @@
 function solve() {
 
-   let html = {
+   const html = {
       availableItems: () => document.querySelector("#products ul"),
       myProductsList: () => document.querySelector("#myProducts ul"),
       productFilterInput: () => document.querySelector(".filter input"),
@@ -17,6 +17,7 @@ function solve() {
    buyButton.addEventListener("click", buyAllProducts);
 
    function addProductHandler(ev) {
+      ev.preventDefault();
 
       let name = html.addNewProduct()[0];
       let quantity = html.addNewProduct()[1];
@@ -40,22 +41,21 @@ function solve() {
    }
 
    function addProductToMyProducts(ev) {
-
-      let availableCount = parseInt(ev.target.parentNode.parentNode.querySelector("strong").innerText.match(/[0-9]+/gm)[0]);
-      let oldPrice = parseFloat(html.totalPriceField().innerText.match(/[0-9.]+/gm)[0]);
-      let newPrice = parseFloat(ev.target.parentNode.querySelector("strong").innerText) + oldPrice;
+      let availableCount = parseInt(ev.target.parentNode.parentNode.querySelector("strong").textContent.split(":")[1].trim());
+      let oldPrice = parseFloat(html.totalPriceField().textContent.split(":")[1].trim());
+      let newPrice = parseFloat(ev.target.parentNode.querySelector("strong").textContent) + oldPrice;
 
       if (availableCount - 1 <= 0) {
          html.availableItems().removeChild(ev.target.parentNode.parentNode);
       }
 
-      ev.target.parentNode.parentNode.querySelector("strong").innerText = `Available: ${availableCount - 1}`
-      html.totalPriceField().innerText = `Total Price: ${newPrice.toFixed(2)}`;
+      ev.target.parentNode.parentNode.querySelector("strong").textContent = `Available: ${availableCount - 1}`;
+      html.totalPriceField().textContent = `Total Price: ${newPrice.toFixed(2)}`;
 
       let newElement = document.createElement("li");
-      let productName = ev.target.parentNode.parentNode.querySelector("span").innerText;
-      let productPrice = ev.target.parentNode.querySelector("strong").innerText;
-      newElement.innerHTML = `${productName}\n<strong>${productPrice}</strong>\n`;
+      let productName = ev.target.parentNode.parentNode.querySelector("span").textContent;
+      let productPrice = ev.target.parentNode.querySelector("strong").textContent;
+      newElement.innerHTML = `${productName}<strong>${productPrice}</strong>`;
 
       html.myProductsList().appendChild(newElement);
    }
@@ -66,33 +66,19 @@ function solve() {
       let availableItems = document.querySelectorAll("#products ul li");
 
       Array.from(availableItems).forEach(el => {
-         let productName = el.querySelector('span')
-         if (productName.innerText.toLowerCase().includes(filterValue.value.toLowerCase())) {
-            el.style.display = 'block'
+         let productName = el.querySelector('span');
+         if (productName.textContent.toLowerCase().includes(filterValue.value.toLowerCase())) {
+            el.style.display = "block";
          } else {
-            el.style.display = 'none'
+            el.style.display = "none";
          }
       })
-
-      // for (const key in availableItems) {
-      //    if (availableItems.hasOwnProperty(key)) {
-      //       const product = availableItems[key];
-      //       let name = product.querySelector("span").innerText;
-
-      //       if (name.toLowerCase().includes(filterValue.value.toLowerCase())) {
-      //          product.setAttribute("style", "display: block;")
-      //       } else {
-      //          product.setAttribute("style", "display: none;")
-      //       }
-
-      //    }
-      // }
 
       filterValue.value = "";
    }
 
    function buyAllProducts(ev) {
-      html.myProductsList().innerText = "";
-      html.totalPriceField().innerText = "Total Price: 0.00" 
+      html.myProductsList().innerHTML = "";
+      html.totalPriceField().textContent = "Total Price: 0.00" 
    }
 }
