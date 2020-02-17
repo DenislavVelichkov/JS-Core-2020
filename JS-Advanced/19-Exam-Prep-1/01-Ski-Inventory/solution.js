@@ -1,31 +1,32 @@
 function solve() {
-   const addElementButton = document.querySelector("#add-new button");
-   const addElement = document.getElementById("add-new");
-   const availableItems = document.querySelector("#products ul");
-   const totalPrice = document.querySelectorAll("h1")[1];
-   const myProducts = document.querySelector("#myProducts ul");
-   const buyButton = document.querySelector("#myProducts button")
-   const filterButton = document.querySelector(".filter button");
-
+   let addElementButton = document.querySelector("#add-new button");
+   let addElement = document.querySelector("#add-new");
+   let availableItems = document.querySelector("#products ul");
+   let totalPrice = document.querySelectorAll("h1")[1];
+   let myProducts = document.querySelector("#myProducts ul");
+   let buyButton = document.querySelector("#myProducts button")
+   let filterButton = document.querySelector(".filter button");
+   
    addElementButton.addEventListener("click", addProductHandler);
    buyButton.addEventListener("click", buyAllProducts);
    filterButton.addEventListener("click", filterHandler);
-
+   
    function addProductHandler(ev) {
       ev.preventDefault();
 
       let name = addElement[0].value;
       let quantity = addElement[1].value;
       let price = addElement[2].value;
-
+      
       let newElement = document.createElement("li");
-      newElement.innerHTML = `<span>${name}</span>\n
+      newElement.innerHTML = 
+                              `<span>${name}</span>\n
                               <strong>Available: ${quantity}</strong>\n
                               <div>\n
                               <strong>${price}</strong>\n
                               <button>Add to Client's List</button>\n
                               </div>\n`;
-
+      
       newElement.addEventListener("click", addProductToMyProducts);
       availableItems.appendChild(newElement);
    }
