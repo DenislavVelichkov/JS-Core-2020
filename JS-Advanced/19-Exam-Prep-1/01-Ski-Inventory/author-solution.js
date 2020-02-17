@@ -26,7 +26,6 @@ function solve() {
     function addProductToBasketHandler(e) {
         if (e.target.tagName === 'BUTTON') {
 
-
             let productPrice = e.target.parentNode.querySelector('strong').textContent;
             let productName = e.target.parentNode.parentNode.querySelector('span').textContent;
             let basketElement = document.createElement('li')
