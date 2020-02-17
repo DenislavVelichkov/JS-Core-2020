@@ -12,7 +12,7 @@ class SkiResort {
         let best = this.hotels.reduce((a, b) => a.points > b.points ? a : b);
         return `Best hotel is ${best.name} with grade ${best.points}. Available beds: ${best.beds}`
     }
-
+    
     build(name, beds) {
         if (name === "" || beds < 1) {
             throw new Error("Invalid input");
@@ -49,6 +49,7 @@ class SkiResort {
         if (!hotel) {
             throw new Error("There is no such hotel");
         }
+
         hotel.points += beds * points;
         hotel.beds += beds;
         this.voters += beds;
@@ -70,6 +71,7 @@ class SkiResort {
 module.exports = SkiResort;
 
 let res = new SkiResort("Some");
+
 console.log(res.build("Sun", 10));
 console.log(res.build('Avenue',5))
 console.log(res.book('Sun', 5))
