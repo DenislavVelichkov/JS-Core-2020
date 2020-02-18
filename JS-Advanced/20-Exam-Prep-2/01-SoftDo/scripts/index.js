@@ -10,31 +10,33 @@ function mySolution() {
   sendButton.addEventListener("click", askQuestionHandler);
 
   function askQuestionHandler(ev) {
+    ev.preventDefault();
+
     let question = html.askQuestionArea().value;
     let nick = html.nickNameArea().value;
 
     let newPendingQuestion = document.createElement("div");
     newPendingQuestion.setAttribute("class", "pendingQuestion");
     newPendingQuestion.innerHTML = `<img src="./images/user.png" width="32" height="32" />`
-    + `<span>Anonymous</span>`
-    + `<p>` + `</p>`
-    + `<div class="actions">`
-    +   `<button class="archive">Archive</button>`
-    +   `<button class="open">Open</button>`
-    + `</div>`;
+      + `<span>Anonymous</span>`
+      + `<p>` + `</p>`
+      + `<div class="actions">`
+      + `<button class="archive">Archive</button>`
+      + `<button class="open">Open</button>`
+      + `</div>`.trim();
 
-      if(nick) {
-        newPendingQuestion.querySelector("span").textContent = nick;
-      }
-        newPendingQuestion.querySelector("p").textContent = question;
+    if (nick) {
+      newPendingQuestion.querySelector("span").textContent = nick;
+    }
+    newPendingQuestion.querySelector("p").textContent = question;
 
-      newPendingQuestion.querySelector(".archive").addEventListener("click", archiveQuestion);
-      newPendingQuestion.querySelector(".open").addEventListener("click", openQuestion);
+    newPendingQuestion.querySelector(".archive").addEventListener("click", archiveQuestion);
+    newPendingQuestion.querySelector(".open").addEventListener("click", openQuestion);
 
-      html.pendingQusetions().appendChild(newPendingQuestion);
+    html.pendingQusetions().appendChild(newPendingQuestion);
 
-      html.askQuestionArea().value = "";
-      html.nickNameArea().value = "";
+    html.askQuestionArea().value = "";
+    html.nickNameArea().value = "";
   }
 
   function archiveQuestion(ev) {
@@ -48,23 +50,26 @@ function mySolution() {
     let nickName = ev.target.parentNode.parentNode.querySelector("span").textContent;
 
     newOpenQuestion.setAttribute("class", "openQuestion");
-    newOpenQuestion.innerHTML = 
-    `<img src="./images/user.png" width="32" height="32" />`
-    + `<span>Anonymous</span>`
-    + `<p></p>`
-    + `<div class="actions">`
-    + `<button class="reply">Reply</button>`
-    + `</div>`;
+    newOpenQuestion.innerHTML =
+      `<img src="./images/user.png" width="32" height="32" />`
+      + `<span>Anonymous</span>`
+      + `<p></p>`
+      + `<div class="actions">`
+      + `<button class="reply">Reply</button>`
+      + `</div>`.trim();
+    console.log(newOpenQuestion.innerHTML)
+    console.log(newOpenQuestion.innerText)
+    console.log(newOpenQuestion.textContent)
 
-    if(nickName) {
+    if (nickName) {
       newOpenQuestion.querySelector("span").textContent = nickName;
     }
 
     newReplySection.setAttribute("class", "replySection");
-    newReplySection.innerHTML = 
+    newReplySection.innerHTML =
       `<input class="replyInput" type="text" placeholder="Reply to this question here..." />`
-    + `<button class="replyButton">Send</button>`
-    + `<ol class="reply" type="1"></ol>`;
+      + `<button class="replyButton">Send</button>`
+      + `<ol class="reply" type="1"></ol>`.trim();
 
     newOpenQuestion.querySelector(".reply").addEventListener("click", replyToQuestion);
     newOpenQuestion.querySelector("p").textContent = questionContent;
@@ -78,14 +83,14 @@ function mySolution() {
     ev.target.parentNode.parentNode.remove()
   }
 
-  function replyToQuestion(ev){
+  function replyToQuestion(ev) {
 
-    if(ev.target.textContent === "Reply") {
+    if (ev.target.textContent === "Reply") {
       ev.target.textContent = "Back"
-      document.querySelector(".replySection").style.display = "block";
+      ev.target.parentNode.parentNode.querySelector(".replySection").style.display = "block";
     } else {
       ev.target.textContent = "Reply"
-      document.querySelector(".replySection").style.display = "none";
+      ev.target.parentNode.parentNode.querySelector(".replySection").style.display = "none";
     }
 
   }
