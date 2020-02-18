@@ -1,13 +1,92 @@
-// NOTE: The comment sections inside the index.html file is an example of how suppose to be structured the current elements.
-//       - You can use them as an example when you create those elements, to check how they will be displayed, just uncomment them.
-//       - Also keep in mind that, the actual skeleton in judge does not have this comment sections. So do not be dependent on them!
-//       - Тhey are present in the skeleton just to help you!
+function mySolution() {
+  const html = {
+    askQuestionArea: () => document.querySelector("#inputSection textarea"),
+    pendingQusetions: () => document.querySelector("#pendingQuestions"),
+    openQuestions: () => document.querySelector("#openQuestions"),
+    nickNameArea: () => document.querySelector("#inputSection input"),
+  };
+  const sendButton = document.querySelector("#inputSection button");
 
+  sendButton.addEventListener("click", askQuestionHandler);
 
-// This function will be invoked when the html is loaded. Check the console in the browser or index.html file.
-function mySolution(){
+  function askQuestionHandler(ev) {
+    let question = html.askQuestionArea().value;
+    let nick = html.nickNameArea().value;
 
-    // TODO: Write my solution for this problem...
-	console.log("GOOD LUCK c(:");
+    let newPendingQuestion = document.createElement("div");
+    newPendingQuestion.setAttribute("class", "pendingQuestion");
+    newPendingQuestion.innerHTML = `<img src="./images/user.png" width="32" height="32" />`
+    + `<span>Anonymous</span>`
+    + `<p>` + `</p>`
+    + `<div class="actions">`
+    +   `<button class="archive">Archive</button>`
+    +   `<button class="open">Open</button>`
+    + `</div>`;
+
+      if(nick) {
+        newPendingQuestion.querySelector("span").textContent = nick;
+      }
+        newPendingQuestion.querySelector("p").textContent = question;
+
+      newPendingQuestion.querySelector(".archive").addEventListener("click", archiveQuestion);
+      newPendingQuestion.querySelector(".open").addEventListener("click", openQuestion);
+
+      html.pendingQusetions().appendChild(newPendingQuestion);
+  }
+
+  function archiveQuestion(ev) {
+    ev.target.parentNode.parentNode.remove();
+  }
+
+  function openQuestion(ev) {
+    let newOpenQuestion = document.createElement("div");
+    let newReplySection = document.createElement("div");
+    let questionContent = ev.target.parentNode.parentNode.querySelector("p").textContent;
+
+    newOpenQuestion.setAttribute("class", "openQuestion");
+    newOpenQuestion.innerHTML = 
+    `<img src="./images/user.png" width="32" height="32" />`
+    + `<span>Anonymous</span>`
+    + `<p></p>`
+    + `<div class="actions">`
+    + `<button class="reply">Reply</button>`
+    + `</div>`;
+
+    newReplySection.setAttribute("class", "replySection");
+    newReplySection.innerHTML = 
+      `<input class="replyInput" type="text" placeholder="Reply to this question here..." />`
+    + `<button class="replyButton">Send</button>`
+    + `<ol class="reply" type="1"></ol>`;
+
+    newOpenQuestion.querySelector(".reply").addEventListener("click", replyToQuestion);
+    newOpenQuestion.querySelector("p").textContent = questionContent;
+
+    newReplySection.setAttribute("style", "display: none;");
+    newReplySection.querySelector(".replyButton").addEventListener("click", writeReply);
+
+    newOpenQuestion.appendChild(newReplySection);
+    html.openQuestions().appendChild(newOpenQuestion);
+
+    ev.target.parentNode.parentNode.remove()
+  }
+
+  function replyToQuestion(ev){
+
+    if(ev.target.textContent === "Reply") {
+      ev.target.textContent = "Back"
+      document.querySelector(".replySection").style.display = "block";
+    } else {
+      ev.target.textContent = "Reply"
+      document.querySelector(".replySection").style.display = "none";
+    }
+
+  }
+
+  function writeReply(ev) {
+    let replyContent = document.querySelector(".replySection input").value;
+    let reply = document.createElement("li");
+    reply.textContent = replyContent;
+    ev.target.parentNode.querySelector(".reply").appendChild(reply);
+  }
+
 }
-// To check out your solution, just submit mySolution() function in judge system.
