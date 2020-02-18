@@ -32,6 +32,9 @@ function mySolution() {
       newPendingQuestion.querySelector(".open").addEventListener("click", openQuestion);
 
       html.pendingQusetions().appendChild(newPendingQuestion);
+
+      html.askQuestionArea().value = "";
+      html.nickNameArea().value = "";
   }
 
   function archiveQuestion(ev) {
@@ -42,6 +45,7 @@ function mySolution() {
     let newOpenQuestion = document.createElement("div");
     let newReplySection = document.createElement("div");
     let questionContent = ev.target.parentNode.parentNode.querySelector("p").textContent;
+    let nickName = ev.target.parentNode.parentNode.querySelector("span").textContent;
 
     newOpenQuestion.setAttribute("class", "openQuestion");
     newOpenQuestion.innerHTML = 
@@ -51,6 +55,10 @@ function mySolution() {
     + `<div class="actions">`
     + `<button class="reply">Reply</button>`
     + `</div>`;
+
+    if(nickName) {
+      newOpenQuestion.querySelector("span").textContent = nickName;
+    }
 
     newReplySection.setAttribute("class", "replySection");
     newReplySection.innerHTML = 
@@ -83,10 +91,11 @@ function mySolution() {
   }
 
   function writeReply(ev) {
-    let replyContent = document.querySelector(".replySection input").value;
+    let replyContent = document.querySelector(".replySection input");
     let reply = document.createElement("li");
-    reply.textContent = replyContent;
+    reply.textContent = replyContent.value;
     ev.target.parentNode.querySelector(".reply").appendChild(reply);
+    replyContent.value = "";
   }
 
 }
