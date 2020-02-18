@@ -8,11 +8,11 @@ function solve() {
       addNewProduct: () => document.querySelectorAll("#add-new input"),
    };
 
-   const addElementButton = document.querySelector("#add-new button");
+   const addProductButton = document.querySelector("#add-new button");
    const buyButton = document.querySelector("#myProducts button")
    const filterButton = document.querySelector(".filter button");
 
-   addElementButton.addEventListener("click", addProductHandler);
+   addProductButton.addEventListener("click", addProductHandler);
    filterButton.addEventListener("click", filterHandler);
    buyButton.addEventListener("click", buyAllProducts);
 
