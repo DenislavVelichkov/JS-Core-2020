@@ -8,6 +8,8 @@ describe('Tests', function () {
   let user1;
   let user2;
   let user3;
+  let fakePizza;
+  let fakeDrink;
 
   beforeEach(function () {
     pizzUni = new PizzUni();
@@ -27,6 +29,8 @@ describe('Tests', function () {
       orderHistory: []
     };
 
+    fakePizza = "Pizza Mente";
+    
   });
 
   describe('Test Constructor', () => {
@@ -51,7 +55,7 @@ describe('Tests', function () {
       expect(pizzUni.registeredUsers.length).deep.equal(3);
     });
 
-    it('Should register user correctly', () => {
+    it('It should register user correctly', () => {
       let user4 = {
         email: "test@aa.aa",
         orderHistory: []
@@ -59,22 +63,58 @@ describe('Tests', function () {
 
       let result = pizzUni.registerUser("test@aa.aa");
 
-      expect(result.email).deep.equal(user4.email);
+      expect(result).deep.equal(user4);
+      expect(pizzUni.registeredUsers.length).deep.equal(1);
     });
     
   });
 
 
   describe('Test makeAnOrder()', () => {
-    it('', () => {
+    it('Must throw error if user is not registered', () => {    
+      let result = () => pizzUni.makeAnOrder(user1.email);
+
+      expect(result).to.throw(Error, "You must be registered to make orders!");
+    });
+
+    it('Must throw error if no pizza is ordered and/or ordered pizza must match available ones', () => {
+      pizzUni.registerUser(user1.email);
+      let result = () => pizzUni.makeAnOrder(user1.email, fakePizza, null);
+
+      expect(result).to.throw(Error, "You must order at least 1 Pizza to finish the order.");
+    });
+
+    it('Must throw error if no drinks are ordered and/or ordered drink must match available ones', () => {
+      
+    });
+
+    it('Order Histroy must save the new order', () => {
 
     });
+
+    it('Should return correct index of the order in the orders array', () => {
+      pizzUni.registerUser(user1.email);
+      let pizza = pizzUni.availableProducts.pizzas[0];
+      let drink = pizzUni.availableProducts.drinks[0];
+
+      let result = pizzUni.makeAnOrder(user1.email, pizza, drink);
+
+      expect(result).deep.equal(0);
+      expect(pizzUni.orders[result].email).deep.equal(user1.email)
+    });
+    
   });
 
 
   describe('Test detailsAboutMyOrder()', () => {
-    it('', () => {
+    it('Shoud return correct status of an order', () => {
+      pizzUni.registerUser(user1.email);
+      let pizza = pizzUni.availableProducts.pizzas[0];
+      let drink = pizzUni.availableProducts.drinks[0];
 
+      let result = pizzUni.makeAnOrder(user1.email, pizza, drink);
+
+      expect(pizzUni.detailsAboutMyOrder(result)).deep.equal("Status of your order: pending")
     });
   });
 
@@ -99,9 +139,20 @@ describe('Tests', function () {
   });
 
   describe('Test completeOrder()', () => {
-    it('', () => {
 
-    });5
+    it('Should change orders status correctly', () => {
+      pizzUni.registerUser(user1.email);
+
+      let pizza = pizzUni.availableProducts.pizzas[0];
+      let drink = pizzUni.availableProducts.drinks[0];
+
+      let orderIndex = pizzUni.makeAnOrder(user1.email, pizza, drink);
+
+      let testOrder = pizzUni.orders[orderIndex];
+      let completedOrder = pizzUni.completeOrder();
+
+      expect(completedOrder.status).deep.equal(testOrder.status)
+    });
   });
 
 });
