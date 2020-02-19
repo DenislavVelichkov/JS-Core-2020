@@ -9,7 +9,6 @@ describe('Tests', function () {
   let user2;
   let user3;
   let fakePizza;
-  let fakeDrink;
 
   beforeEach(function () {
     pizzUni = new PizzUni();
