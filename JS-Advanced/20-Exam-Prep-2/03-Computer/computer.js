@@ -1,5 +1,4 @@
 class Computer {
-
     constructor(ramMemory, cpuGHz, hddMemory) {
         this.ramMemory = ramMemory;
         this.cpuGHz = cpuGHz;
@@ -71,7 +70,7 @@ class Computer {
             ramUsage: ramMemoryUsage(openedProgram.requiredSpace, this.ramMemory),
             cpuUsage: cpuUsage(openedProgram.requiredSpace, this.cpuGHz),
         }
-
+        
         if (totalRamUsage >= 100.0 && totalCpuUsage >= 100.0) {
             throw new Error(`${name} caused out of memory exception`)
         }

@@ -57,10 +57,7 @@ function mySolution() {
       + `<div class="actions">`
       + `<button class="reply">Reply</button>`
       + `</div>`.trim();
-    console.log(newOpenQuestion.innerHTML)
-    console.log(newOpenQuestion.innerText)
-    console.log(newOpenQuestion.textContent)
-
+  
     if (nickName) {
       newOpenQuestion.querySelector("span").textContent = nickName;
     }
