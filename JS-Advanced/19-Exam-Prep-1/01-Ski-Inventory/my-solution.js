@@ -1,11 +1,11 @@
 function solve() {
 
    const html = {
-      availableItems: () => document.querySelector("#products ul"),
-      myProductsList: () => document.querySelector("#myProducts ul"),
-      productFilterInput: () => document.querySelector(".filter input"),
-      totalPriceField: () => document.querySelectorAll("h1")[1],
-      addNewProduct: () => document.querySelectorAll("#add-new input"),
+      availableItems: document.querySelector("#products ul"),
+      myProductsList: document.querySelector("#myProducts ul"),
+      productFilterInput: document.querySelector(".filter input"),
+      totalPriceField: document.querySelectorAll("h1")[1],
+      addNewProduct: document.querySelectorAll("#add-new input"),
    };
 
    const addProductButton = document.querySelector("#add-new button");
@@ -19,21 +19,30 @@ function solve() {
    function addProductHandler(ev) {
       ev.preventDefault();
 
-      let name = html.addNewProduct()[0];
-      let quantity = html.addNewProduct()[1];
-      let price = html.addNewProduct()[2];
+      let name = html.addNewProduct[0];
+      let quantity = html.addNewProduct[1];
+      let price = html.addNewProduct[2];
 
-      let newElement = document.createElement("li");
-      newElement.innerHTML = `<span>${name.value}</span>`
-         + `<strong>Available: ${quantity.value}</strong>`
-         + `<div>`
-         + `<strong>${price.value}</strong>`
-         + `<button>Add to Client's List</button>`
-         + `</div>`;
+      let newElement = createHTMLElement(
+         "li", null, null, null, null);
+      let span = createHTMLElement(
+         "span", null, name.value, null, null);
+      let strong = createHTMLElement(
+         "strong", null, `Available: ${quantity.value}`, null, null);
+      let div = createHTMLElement(
+         "div", null, null, null, null);
+      let subStrong = createHTMLElement(
+         "strong", null, `${Number(price.value).toFixed(2)}`, null, null);
+      let button = createHTMLElement(
+         "button", null, "Add to Client's List", null, { name: "click", func: addProductToMyProducts });
 
-      newElement.querySelector("button").addEventListener("click", addProductToMyProducts);
+      newElement.appendChild(span);
+      newElement.appendChild(strong);
+      div.appendChild(subStrong);
+      div.appendChild(button);
+      newElement.appendChild(div);
 
-      html.availableItems().appendChild(newElement);
+      html.availableItems.appendChild(newElement);
 
       name.value = "";
       quantity.value = "";
@@ -41,44 +50,72 @@ function solve() {
    }
 
    function addProductToMyProducts(ev) {
-      let availableCount = parseInt(ev.target.parentNode.parentNode.querySelector("strong").textContent.split(":")[1].trim());
-      let oldPrice = parseFloat(html.totalPriceField().textContent.split(":")[1].trim());
-      let newPrice = parseFloat(ev.target.parentNode.querySelector("strong").textContent) + oldPrice;
+      let availableCount = parseInt(ev.target.parentNode.parentNode.childNodes[1].textContent.split(":")[1].trim());
+      let oldPrice = parseFloat(html.totalPriceField.textContent.split(":")[1].trim());
+      let newPrice = parseFloat(ev.target.parentNode.childNodes[0].textContent) + oldPrice;
 
       if (availableCount - 1 <= 0) {
-         html.availableItems().removeChild(ev.target.parentNode.parentNode);
+         ev.target.parentNode.parentNode.remove();
       }
 
-      ev.target.parentNode.parentNode.querySelector("strong").textContent = `Available: ${availableCount - 1}`;
-      html.totalPriceField().textContent = `Total Price: ${newPrice.toFixed(2)}`;
+      ev.target.parentNode.parentNode.childNodes[1].textContent = `Available: ${availableCount - 1}`;
+      html.totalPriceField.textContent = `Total Price: ${Number(newPrice).toFixed(2)}`;
 
-      let newElement = document.createElement("li");
-      let productName = ev.target.parentNode.parentNode.querySelector("span").textContent;
-      let productPrice = ev.target.parentNode.querySelector("strong").textContent;
-      newElement.innerHTML = `${productName}<strong>${productPrice}</strong>`;
+      let productName = ev.target.parentNode.parentNode.childNodes[0].textContent;
+      let productPrice = ev.target.parentNode.childNodes[0].textContent;
 
-      html.myProductsList().appendChild(newElement);
+      let newElement = createHTMLElement("li", null, productName, null, null);
+      let price = createHTMLElement("strong", null, productPrice, null, null);
+
+      newElement.appendChild(price);
+      html.myProductsList.appendChild(newElement);
    }
 
    function filterHandler(ev) {
 
-      let filterValue = html.productFilterInput();
+      let filterValue = html.productFilterInput;
       let availableItems = document.querySelectorAll("#products ul li");
 
       Array.from(availableItems).forEach(el => {
-         let productName = el.querySelector('span');
+
+         let productName = el.childNodes[0];
+
          if (productName.textContent.toLowerCase().includes(filterValue.value.toLowerCase())) {
             el.style.display = "block";
          } else {
             el.style.display = "none";
          }
+
       })
 
       filterValue.value = "";
    }
 
    function buyAllProducts(ev) {
-      html.myProductsList().innerHTML = "";
-      html.totalPriceField().textContent = "Total Price: 0.00" 
+      html.myProductsList.innerHTML = "";
+      html.totalPriceField.textContent = "Total Price: 0.00"
+   }
+
+   function createHTMLElement(tagName, className, textContent, attributes, event) {
+
+      let newElemenet = document.createElement(tagName);
+
+      if (className) {
+         newElemenet.classList.add(className);
+      }
+
+      if (textContent) {
+         newElemenet.textContent = textContent;
+      }
+
+      if (attributes) {
+         attributes.array.forEach(element => element.setAttribute(element.key, element.value));
+      }
+
+      if (event) {
+         newElemenet.addEventListener(event.name, event.func);
+      }
+
+      return newElemenet;
    }
 }

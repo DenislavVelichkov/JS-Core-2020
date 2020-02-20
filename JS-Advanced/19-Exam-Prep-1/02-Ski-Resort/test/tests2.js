@@ -22,35 +22,20 @@ describe('Tests', function () {
     describe('Test bestHotels()', () => {
         it('If no voters yet, should be 0 and return message', () => {
             const result = skiResort.bestHotel;
-            expect(result).to.be.equal("No votes yet");
+            expect(result).deep.equal("No votes yet");
         });
 
         it('Find best hotel', () => {
-            let hotel1 = {
-                name: 'SunnyBeach',
-                beds: 100,
-                points: 2
-            };
-
-            let hotel2 = {
-                name: 'CloudyBeach',
-                beds: 200,
-                points: 3
-            };
-
-            let hotel3 = {
-                name: 'ShipWreck',
-                beds: 200,
-                points: 4
-            };
-
             skiResort.voters = 5;
-            skiResort.hotels.push(hotel1);
-            skiResort.hotels.push(hotel2);
-            skiResort.hotels.push(hotel3);
+            skiResort.build('SunnyBeach', 100);
+            skiResort.build('CloudyBeach', 100);
+            skiResort.build('ShipWreck', 100);
+            skiResort.book('ShipWreck', 10);
+            skiResort.leave('ShipWreck', 10, 10);
 
             const result = skiResort.bestHotel;
-            expect(result).to.be.equal(`Best hotel is ${hotel3.name} with grade ${hotel3.points}. Available beds: ${hotel3.beds}`)
+
+            expect(result).deep.equal(`Best hotel is ShipWreck with grade 100. Available beds: 100`)
         });
 
     });
@@ -71,7 +56,7 @@ describe('Tests', function () {
         it('The build should be successful and return success message', () => {
             const result = skiResort.build("Alabala", 3);
 
-            expect(result).to.equal(`Successfully built new hotel - Alabala`);
+            expect(result).deep.equal(`Successfully built new hotel - Alabala`);
         });
     });
 
@@ -87,12 +72,6 @@ describe('Tests', function () {
         });
 
         it('Throw error if hotel does not exists', () => {
-            skiResort.hotels.push({
-                name: "BlackPearl",
-                beds: 10,
-                points: 100
-            })
-
             const result = () => skiResort.book("BlackNothing", 2);
             expect(result).to.throw(Error, "There is no such hotel");
         });
@@ -118,8 +97,12 @@ describe('Tests', function () {
             skiResort.hotels.push(hotel)
             const result = skiResort.book("BlackPearl", 1);
 
-            expect(hotel.beds).to.be.deep.equal(1);
-            expect(result).to.be.deep.equal("Successfully booked");
+            expect(skiResort.hotels[0]).deep.equal({
+                name: "BlackPearl",
+                beds: 1,
+                points: 100
+            });
+            expect(result).deep.equal("Successfully booked");
         });
 
     });
