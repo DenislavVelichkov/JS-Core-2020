@@ -1,9 +1,9 @@
 function mySolution() {
   const html = {
-    askQuestionArea: () => document.querySelector("#inputSection textarea"),
-    pendingQusetions: () => document.querySelector("#pendingQuestions"),
-    openQuestions: () => document.querySelector("#openQuestions"),
-    nickNameArea: () => document.querySelector("#inputSection input"),
+    askQuestionArea: document.querySelector("#inputSection textarea"),
+    pendingQusetions: document.querySelector("#pendingQuestions"),
+    openQuestions: document.querySelector("#openQuestions"),
+    nickNameArea: document.querySelector("#inputSection input"),
   };
   const sendButton = document.querySelector("#inputSection button");
 
@@ -11,9 +11,8 @@ function mySolution() {
 
   function askQuestionHandler(ev) {
     ev.preventDefault();
-
-    let question = html.askQuestionArea().value;
-    let nick = html.nickNameArea().value;
+    let question = html.askQuestionArea.value;
+    let nick = html.nickNameArea.value;
 
     let newPendingQuestion = document.createElement("div");
     newPendingQuestion.setAttribute("class", "pendingQuestion");
@@ -33,10 +32,9 @@ function mySolution() {
     newPendingQuestion.querySelector(".archive").addEventListener("click", archiveQuestion);
     newPendingQuestion.querySelector(".open").addEventListener("click", openQuestion);
 
-    html.pendingQusetions().appendChild(newPendingQuestion);
+    html.pendingQusetions.appendChild(newPendingQuestion);
 
-    html.askQuestionArea().value = "";
-    html.nickNameArea().value = "";
+    html.askQuestionArea.value = "";
   }
 
   function archiveQuestion(ev) {
@@ -75,7 +73,7 @@ function mySolution() {
     newReplySection.querySelector(".replyButton").addEventListener("click", writeReply);
 
     newOpenQuestion.appendChild(newReplySection);
-    html.openQuestions().appendChild(newOpenQuestion);
+    html.openQuestions.appendChild(newOpenQuestion);
 
     ev.target.parentNode.parentNode.remove()
   }
@@ -99,5 +97,5 @@ function mySolution() {
     ev.target.parentNode.querySelector(".reply").appendChild(reply);
     replyContent.value = "";
   }
-
+  
 }
