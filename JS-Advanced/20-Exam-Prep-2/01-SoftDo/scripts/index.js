@@ -5,6 +5,7 @@ function mySolution() {
     openQuestions: document.querySelector("#openQuestions"),
     nickNameArea: document.querySelector("#inputSection input"),
   };
+  
   const sendButton = document.querySelector("#inputSection button");
 
   sendButton.addEventListener("click", askQuestionHandler);

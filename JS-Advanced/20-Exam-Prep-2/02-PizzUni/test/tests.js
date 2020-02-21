@@ -1,14 +1,14 @@
 const { expect } = require("chai");
 const { beforeEach } = require("mocha");
 
-let PizzUni = require('../PizzUni');
+const PizzUni = require('../PizzUni');
 
 describe('Tests', function () {
-  let pizzUni;
   let user1;
   let user2;
   let user3;
   let fakePizza;
+  let fakeDrink;
 
   beforeEach(function () {
     pizzUni = new PizzUni();
@@ -29,26 +29,27 @@ describe('Tests', function () {
     };
 
     fakePizza = "Pizza Mente";
-    
+    fakeDrink = "Mytenica";
   });
 
   describe('Test Constructor', () => {
     it('Test class properties', () => {
       expect(pizzUni.registeredUsers).deep.equal([]);
-      expect(Object.keys(pizzUni.availableProducts).length).deep.equal(2);
-      expect(pizzUni.availableProducts.pizzas.length).deep.equal(3);
-      expect(pizzUni.availableProducts.drinks.length).deep.equal(3);
+      expect(pizzUni.availableProducts).deep.equal({
+        pizzas: ['Italian Style', 'Barbeque Classic', 'Classic Margherita'],
+        drinks: ['Coca-Cola', 'Fanta', 'Water']
+      });
       expect(pizzUni.orders).deep.equal([]);
     });
   });
 
   describe('Test registerUser()', () => {
     it('Should return error when email is duplicated', () => {
-      pizzUni.registeredUsers.push(user1);
-      pizzUni.registeredUsers.push(user2);
-      pizzUni.registeredUsers.push(user3);
+      pizzUni.registerUser(user1.email);
+      pizzUni.registerUser(user2.email);
+      pizzUni.registerUser(user3.email);
 
-      let result = () => pizzUni.registerUser(user1.email);
+      const result = () => pizzUni.registerUser(user1.email);
 
       expect(result).to.throw(Error, `This email address (${user1.email}) is already being used!`)
       expect(pizzUni.registeredUsers.length).deep.equal(3);
@@ -64,74 +65,114 @@ describe('Tests', function () {
 
       expect(result).deep.equal(user4);
       expect(pizzUni.registeredUsers.length).deep.equal(1);
+      expect(pizzUni.registeredUsers[0]).deep.equal(user4);
     });
-    
+
   });
 
-
   describe('Test makeAnOrder()', () => {
-    it('Must throw error if user is not registered', () => {    
-      let result = () => pizzUni.makeAnOrder(user1.email);
+    it('Must throw error if user is not registered', () => {
+      let result = () => pizzUni.makeAnOrder(user1.email, 'Italian Style', 'Coca-Cola');
 
       expect(result).to.throw(Error, "You must be registered to make orders!");
     });
 
     it('Must throw error if no pizza is ordered and/or ordered pizza must match available ones', () => {
       pizzUni.registerUser(user1.email);
-      let result = () => pizzUni.makeAnOrder(user1.email, fakePizza, null);
+
+      let result = () => pizzUni.makeAnOrder(user1.email, fakePizza, "Fanta");
 
       expect(result).to.throw(Error, "You must order at least 1 Pizza to finish the order.");
     });
 
-    it('Must throw error if no drinks are ordered and/or ordered drink must match available ones', () => {
-      
-    });
-
-    it('Order Histroy must save the new order', () => {
-
-    });
-
-    it('Should return correct index of the order in the orders array', () => {
+    it('Must return order with a drink', () => {
       pizzUni.registerUser(user1.email);
-      let pizza = pizzUni.availableProducts.pizzas[0];
-      let drink = pizzUni.availableProducts.drinks[0];
 
-      let result = pizzUni.makeAnOrder(user1.email, pizza, drink);
+      let result = pizzUni.makeAnOrder(user1.email, 'Italian Style', 'Coca-Cola');
+
+      let userOrder = {
+        orderedPizza: 'Italian Style',
+        orderedDrink: 'Coca-Cola'
+      };
+
+      expect(pizzUni.orders[result]).deep.equal({
+        ...userOrder,
+        email: user1.email,
+        status: 'pending'
+      });
+      expect(pizzUni.orders.length).deep.equal(1);
+      expect(pizzUni.orders[0].orderedDrink).to.equal('Coca-Cola');
+      expect(pizzUni.registeredUsers[0].orderHistory).to.deep.equal([{
+        orderedDrink: 'Coca-Cola',
+        orderedPizza: 'Italian Style'
+      }]);
+    });
+
+    it('Must return order index', () => {
+      pizzUni.registerUser(user1.email);
+
+      let result = pizzUni.makeAnOrder(user1.email, 'Italian Style', 'Coca-Cola');
 
       expect(result).deep.equal(0);
-      expect(pizzUni.orders[result].email).deep.equal(user1.email)
     });
-    
-  });
 
+    it('Must return correct user order', () => {
+      pizzUni.registerUser(user1.email);
+      let user = pizzUni.doesTheUserExist(user1.email);
+
+      pizzUni.makeAnOrder(user1.email, 'Italian Style', 'Coca-Cola');
+
+      let userOrder = {
+        orderedPizza: 'Italian Style',
+        orderedDrink: 'Coca-Cola'
+      };
+
+      expect(user.orderHistory[0]).deep.equal(userOrder);
+      expect(user.orderHistory.length).deep.equal(1);
+    });
+
+  });
 
   describe('Test detailsAboutMyOrder()', () => {
     it('Shoud return correct status of an order', () => {
       pizzUni.registerUser(user1.email);
-      let pizza = pizzUni.availableProducts.pizzas[0];
-      let drink = pizzUni.availableProducts.drinks[0];
+      pizzUni.makeAnOrder(user1.email, 'Italian Style', 'Coca-Cola');
+      pizzUni.completeOrder();
+      pizzUni.makeAnOrder(user1.email, 'Barbeque Classic', 'Water');
+      pizzUni.completeOrder();
+      pizzUni.makeAnOrder(user1.email, 'Italian Style', 'Fanta');
 
-      let result = pizzUni.makeAnOrder(user1.email, pizza, drink);
+      let compl = pizzUni.detailsAboutMyOrder(1);
+      let pend = pizzUni.detailsAboutMyOrder(2);
 
-      expect(pizzUni.detailsAboutMyOrder(result)).deep.equal("Status of your order: pending")
+      expect(compl).deep.equal("Status of your order: completed")
+      expect(pend).deep.equal("Status of your order: pending")
     });
-  });
 
+    it('Test completed functionality', () => {
+      const result = pizzUni.detailsAboutMyOrder(0);
+
+      expect(result).to.equal(undefined);
+    });
+
+    
+  });
 
   describe('Test doesTheUserExist()', () => {
     it('The method should return correct user', () => {
-      pizzUni.registeredUsers.push(user1);
-      pizzUni.registeredUsers.push(user2);
-      pizzUni.registeredUsers.push(user3);
-      
+      pizzUni.registerUser(user1.email);
+      pizzUni.registerUser(user2.email);
+      pizzUni.registerUser(user3.email);
+
       let result = pizzUni.doesTheUserExist(user1.email);
-      expect(result).deep.equal(user1);
+      expect(result).deep.equal(pizzUni.registeredUsers[0]);
     });
+
     it('The method should return undefined', () => {
-      pizzUni.registeredUsers.push(user1);
-      pizzUni.registeredUsers.push(user2);
-      pizzUni.registeredUsers.push(user3);
-      
+      pizzUni.registerUser(user1.email);
+      pizzUni.registerUser(user2.email);
+      pizzUni.registerUser(user3.email);
+
       let result = pizzUni.doesTheUserExist("test@aa.aa");
       expect(result).equal(undefined);
     });
@@ -142,15 +183,25 @@ describe('Tests', function () {
     it('Should change orders status correctly', () => {
       pizzUni.registerUser(user1.email);
 
-      let pizza = pizzUni.availableProducts.pizzas[0];
-      let drink = pizzUni.availableProducts.drinks[0];
+      let userOrder = {
+        orderedPizza: 'Barbeque Classic',
+        orderedDrink: 'Water'
+      };
 
-      let orderIndex = pizzUni.makeAnOrder(user1.email, pizza, drink);
+      let order = {
+        ...userOrder,
+        email: user1.email,
+        status: 'completed'
+      };
 
-      let testOrder = pizzUni.orders[orderIndex];
+      pizzUni.makeAnOrder(user1.email, 'Italian Style', 'Coca-Cola');
+      pizzUni.makeAnOrder(user1.email, 'Barbeque Classic', 'Water');
+      pizzUni.makeAnOrder(user1.email, 'Italian Style', 'Fanta');
+      pizzUni.completeOrder();
+
       let completedOrder = pizzUni.completeOrder();
 
-      expect(completedOrder.status).deep.equal(testOrder.status)
+      expect(completedOrder).deep.equal(order);
     });
   });
 
