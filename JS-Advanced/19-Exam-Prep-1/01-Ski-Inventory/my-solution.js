@@ -109,7 +109,7 @@ function solve() {
       }
 
       if (attributes) {
-         attributes.array.forEach(element => element.setAttribute(element.key, element.value));
+         Array.from(attributes).forEach(atr => newElemenet.setAttribute(atr.key, atr.value));
       }
 
       if (event) {

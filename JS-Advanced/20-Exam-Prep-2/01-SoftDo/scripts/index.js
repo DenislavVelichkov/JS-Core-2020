@@ -12,28 +12,32 @@ function mySolution() {
   function askQuestionHandler(ev) {
     ev.preventDefault();
     let question = html.askQuestionArea.value;
-    let nick = html.nickNameArea.value;
+    let nickName = html.nickNameArea.value;
 
-    let newPendingQuestion = document.createElement("div");
-    newPendingQuestion.setAttribute("class", "pendingQuestion");
-    newPendingQuestion.innerHTML = `<img src="./images/user.png" width="32" height="32" />`
-      + `<span>Anonymous</span>`
-      + `<p>` + `</p>`
-      + `<div class="actions">`
-      + `<button class="archive">Archive</button>`
-      + `<button class="open">Open</button>`
-      + `</div>`.trim();
+    let newPendingQuestion = createHTMLElement("div", "pendingQuestion", null, null, null);
+    let img = createHTMLElement(
+      "img",
+      null,
+      null,
+      [{ key: "src", value: "./images/user.png" }, { key: "width", value: "32" }, { key: "height", value: "32" }],
+      null);
+    let span = createHTMLElement("span", null, "Anonymous", null, null);
+    let p = createHTMLElement("p", null, question, null, null);
+    let div = createHTMLElement("div", "actions", null, null, null);
+    let buttonArchive = createHTMLElement("button", "archive", "Archive", null, { name: "click", func: archiveQuestion });
+    let buttonOpen = createHTMLElement("button", "open", "Open", null, { name: "click", func: openQuestion });
+    newPendingQuestion.appendChild(img);
+    newPendingQuestion.appendChild(span);
+    newPendingQuestion.appendChild(p);
+    newPendingQuestion.appendChild(div);
+    div.appendChild(buttonArchive);
+    div.appendChild(buttonOpen);
 
-    if (nick) {
-      newPendingQuestion.querySelector("span").textContent = nick;
+    if (nickName) {
+      newPendingQuestion.querySelector("span").textContent = nickName;
     }
-    newPendingQuestion.querySelector("p").textContent = question;
-
-    newPendingQuestion.querySelector(".archive").addEventListener("click", archiveQuestion);
-    newPendingQuestion.querySelector(".open").addEventListener("click", openQuestion);
 
     html.pendingQusetions.appendChild(newPendingQuestion);
-
     html.askQuestionArea.value = "";
   }
 
@@ -55,7 +59,7 @@ function mySolution() {
       + `<div class="actions">`
       + `<button class="reply">Reply</button>`
       + `</div>`.trim();
-  
+
     if (nickName) {
       newOpenQuestion.querySelector("span").textContent = nickName;
     }
@@ -97,5 +101,28 @@ function mySolution() {
     ev.target.parentNode.querySelector(".reply").appendChild(reply);
     replyContent.value = "";
   }
-  
+
+  function createHTMLElement(tagName, className, textContent, attributes, event) {
+
+    let newElemenet = document.createElement(tagName);
+
+    if (className) {
+      newElemenet.classList.add(className);
+    }
+
+    if (textContent) {
+      newElemenet.textContent = textContent;
+    }
+
+    if (attributes) {
+      Array.from(attributes).forEach(atr => newElemenet.setAttribute(atr.key, atr.value));
+    }
+
+    if (event) {
+      newElemenet.addEventListener(event.name, event.func);
+    }
+
+    return newElemenet;
+  }
+
 }

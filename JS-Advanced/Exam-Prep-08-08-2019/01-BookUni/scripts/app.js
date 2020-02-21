@@ -8,9 +8,9 @@ function solve() {
         oldBookSection: document.querySelector("#outputs").childNodes[1].childNodes[3],
         totalStoreProfit: document.querySelector("body").childNodes[5],
     };
-  
+
     html.addNewBookBtn.addEventListener("click", addNewBook);
-   
+
     function addNewBook(ev) {
         ev.preventDefault();
 
@@ -23,15 +23,12 @@ function solve() {
 
             let newBook = createHTMLElement("div", "book", null, null, null);
             let p = createHTMLElement("p", null, `${bookTitle} [${year}]`, null, null);
-            let btnBuy = createHTMLElement("button", null, null, null, null);
-            let btnMove = createHTMLElement("button", null, "Move to old section", null, null);
-
-            btnBuy.addEventListener("click", buyBook);
-            btnMove.addEventListener("click", moveBook);
+            let btnBuy = createHTMLElement("button", null, null, null, { name: "click", func: buyBook });
+            let btnMove = createHTMLElement("button", null, "Move to old section", null, { name: "click", func: moveBook });
 
             newBook.appendChild(p);
 
-            if(year >= 2000) {
+            if (year >= 2000) {
                 newBook.appendChild(btnBuy);
                 btnBuy.textContent = `Buy it only for ${stringifyPrice} BGN`;
                 newBook.appendChild(btnMove);
@@ -43,7 +40,7 @@ function solve() {
                 newBook.appendChild(btnBuy);
                 html.oldBookSection.appendChild(newBook);
             }
-            
+
         }
 
     }
@@ -53,7 +50,7 @@ function solve() {
         let oldProfit = parseFloat(html.totalStoreProfit.textContent.match(/\d+/gm).join("."));
         profit += oldProfit;
         profit = profit.toFixed(2)
-        
+
         html.totalStoreProfit.textContent = `Total Store Profit: ${profit} BGN`;
         ev.target.parentNode.remove();
     }
@@ -63,7 +60,7 @@ function solve() {
         bookToMove.childNodes[1].addEventListener("click", buyBook);
         bookToMove.childNodes[2].remove()
 
-        let newPrice = parseFloat(bookToMove.childNodes[1].textContent.match(/\d+/gm).join(".")) * 0.85; 
+        let newPrice = parseFloat(bookToMove.childNodes[1].textContent.match(/\d+/gm).join(".")) * 0.85;
         newPrice = newPrice.toFixed(2);
 
         bookToMove.childNodes[1].textContent = `Buy it only for ${newPrice} BGN`;
@@ -84,11 +81,11 @@ function solve() {
         }
 
         if (attributes) {
-            attributes.array.forEach(element => element.setAttribute(element.key, element.value));
+            Array.from(attributes).forEach(atr => newElemenet.setAttribute(atr.key, atr.value));
         }
 
         if (event) {
-            element.addEventListener(event.name, event.func);
+            newElemenet.addEventListener(event.name, event.func);
         }
 
         return newElemenet;
