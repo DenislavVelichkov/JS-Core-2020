@@ -1,5 +1,4 @@
 const { expect } = require("chai");
-const { assert } = require("chai");
 const { beforeEach } = require("mocha");
 
 let SkiResort = require('../solution');

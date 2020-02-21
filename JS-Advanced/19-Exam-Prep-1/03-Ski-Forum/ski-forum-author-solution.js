@@ -14,7 +14,7 @@ class Forum {
         }
 
         if (this._users.find(x => x.username === username || x.email === email)) {
-            throw (new Error('This user already exists!'))
+            throw new Error('This user already exists!');
         }
         this._users.push({
             username,
