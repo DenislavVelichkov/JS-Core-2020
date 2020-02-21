@@ -11,6 +11,7 @@ function mySolution() {
 
   function askQuestionHandler(ev) {
     ev.preventDefault();
+
     let question = html.askQuestionArea.value;
     let nickName = html.nickNameArea.value;
 
@@ -26,6 +27,7 @@ function mySolution() {
     let div = createHTMLElement("div", "actions", null, null, null);
     let buttonArchive = createHTMLElement("button", "archive", "Archive", null, { name: "click", func: archiveQuestion });
     let buttonOpen = createHTMLElement("button", "open", "Open", null, { name: "click", func: openQuestion });
+
     newPendingQuestion.appendChild(img);
     newPendingQuestion.appendChild(span);
     newPendingQuestion.appendChild(p);
@@ -46,59 +48,48 @@ function mySolution() {
   }
 
   function openQuestion(ev) {
-    let newOpenQuestion = document.createElement("div");
-    let newReplySection = document.createElement("div");
-    let questionContent = ev.target.parentNode.parentNode.querySelector("p").textContent;
-    let nickName = ev.target.parentNode.parentNode.querySelector("span").textContent;
+    let newOpenQuestion = ev.target.parentNode.parentNode.cloneNode(true);
+    newOpenQuestion.className = "openQuestion";
 
-    newOpenQuestion.setAttribute("class", "openQuestion");
-    newOpenQuestion.innerHTML =
-      `<img src="./images/user.png" width="32" height="32" />`
-      + `<span>Anonymous</span>`
-      + `<p></p>`
-      + `<div class="actions">`
-      + `<button class="reply">Reply</button>`
-      + `</div>`.trim();
-
-    if (nickName) {
-      newOpenQuestion.querySelector("span").textContent = nickName;
+    let parent = newOpenQuestion.childNodes[3];
+    while (parent.firstChild) {
+      parent.removeChild(newOpenQuestion.childNodes[3].lastChild);
     }
+   
+    let replyBtn = createHTMLElement("button", "reply", "Reply", null, { name: "click", func: replyToQuestion });
+    newOpenQuestion.childNodes[3].appendChild(replyBtn);
 
-    newReplySection.setAttribute("class", "replySection");
-    newReplySection.innerHTML =
-      `<input class="replyInput" type="text" placeholder="Reply to this question here..." />`
-      + `<button class="replyButton">Send</button>`
-      + `<ol class="reply" type="1"></ol>`.trim();
+    let newReplySection = createHTMLElement("div", "replySection", null, [{ key: "style", value: "display: none;" }], null);
+    let input = createHTMLElement("input", "replyInput", null, [{ key: "type", value: "text" }, { key: "placeholder", value: "Reply to this question here..."}], null);
+    let sendBtn = createHTMLElement("button", "replyButton", "Send", null, { name: "click", func: writeReply });
+    let ol = createHTMLElement("ol", "reply", null, [{ key: "type", value: "1"}], null);
 
-    newOpenQuestion.querySelector(".reply").addEventListener("click", replyToQuestion);
-    newOpenQuestion.querySelector("p").textContent = questionContent;
-
-    newReplySection.setAttribute("style", "display: none;");
-    newReplySection.querySelector(".replyButton").addEventListener("click", writeReply);
+    newReplySection.appendChild(input);
+    newReplySection.appendChild(sendBtn);
+    newReplySection.appendChild(ol);
 
     newOpenQuestion.appendChild(newReplySection);
-    html.openQuestions.appendChild(newOpenQuestion);
 
+    html.openQuestions.appendChild(newOpenQuestion);
     ev.target.parentNode.parentNode.remove()
   }
 
   function replyToQuestion(ev) {
-
+  
     if (ev.target.textContent === "Reply") {
       ev.target.textContent = "Back"
-      ev.target.parentNode.parentNode.querySelector(".replySection").style.display = "block";
+      ev.target.parentNode.parentNode.childNodes[4].style.display = "block";
     } else {
       ev.target.textContent = "Reply"
-      ev.target.parentNode.parentNode.querySelector(".replySection").style.display = "none";
+      ev.target.parentNode.parentNode.childNodes[4].style.display = "none";
     }
 
   }
 
   function writeReply(ev) {
-    let replyContent = document.querySelector(".replySection input");
-    let reply = document.createElement("li");
-    reply.textContent = replyContent.value;
-    ev.target.parentNode.querySelector(".reply").appendChild(reply);
+    let replyContent = ev.target.parentNode.childNodes[0];
+    let reply = createHTMLElement("li", null, replyContent.value, null, null);
+    ev.target.parentNode.childNodes[2].appendChild(reply);
     replyContent.value = "";
   }
 
