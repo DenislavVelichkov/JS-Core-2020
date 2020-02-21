@@ -1,10 +1,12 @@
 class Computer {
     constructor(ramMemory, cpuGHz, hddMemory) {
-        this.ramMemory = ramMemory;
-        this.cpuGHz = cpuGHz;
-        this.hddMemory = hddMemory;
+        this.ramMemory = parseInt(ramMemory);
+        this.cpuGHz = parseFloat(cpuGHz);
+        this.hddMemory = parseInt(hddMemory);
         this.taskManager = [];
         this.installedPrograms = [];
+        this.totalRamUsage = 0;
+        this.totalCpuUsage = 0;
     }
 
     installAProgram(name, requiredSpace) {
@@ -13,8 +15,8 @@ class Computer {
         }
 
         let program = {
-            name: name,
-            requiredSpace: requiredSpace,
+            name,
+            requiredSpace: Number(requiredSpace),
         };
 
         this.hddMemory -= program.requiredSpace;
@@ -30,22 +32,29 @@ class Computer {
             throw new Error("Control panel is not responding");
         }
 
-        return this.installedPrograms = this.installedPrograms.filter(p => {
-            if (p === programToUninstall) {
+        this.installedPrograms = this.installedPrograms.filter(p => {
+            if (p.name === programToUninstall.name) {
                 this.hddMemory += p.requiredSpace;
             }
 
-            return p !== programToUninstall;
+            return p.name !== programToUninstall.name;
         })
+
+        return this.installedPrograms;
     }
 
     openAProgram(name) {
-        const ramMemoryUsage = (programRequiredSpace, totalRamMemory) => (programRequiredSpace / totalRamMemory) * 1.5;
-        const cpuUsage = (programRequiredSpace, cpuGHz) => ((programRequiredSpace / cpuGHz) / 500) * 1.5;
-        let openedProgram = this.installedPrograms.find(p => p.name === name);
+        const ramMemoryUsage = (programRequiredSpace, totalRamMemory) => {
+            return Number((programRequiredSpace / totalRamMemory) * 1.5);
+        };
+        const cpuUsage = (programRequiredSpace, cpuGHz) => {
+            return Number(((programRequiredSpace / cpuGHz) / 500) * 1.5);
+        };
+
+        let programToOpen = this.installedPrograms.find(p => p.name === name);
         let isProgramAlreadyOpened = this.taskManager.find(p => p.name === name);
 
-        if (!openedProgram) {
+        if (!programToOpen) {
             throw new Error(`The ${name} is not recognized`);
         }
 
@@ -53,37 +62,28 @@ class Computer {
             throw new Error(`The ${name} is already open`);
         }
 
-        let totalRamUsage = this.taskManager.reduce((acc, p) => {
-            acc += ramMemoryUsage(p.requiredSpace, this.ramMemory);
-
-            return acc;
-        }, 0)
-
-        let totalCpuUsage = this.taskManager.reduce((acc, p) => {
-            acc += cpuUsage(p.requiredSpace, this.cpuGHz);
-
-            return acc;
-        }, 0)
-
         let currentProgram = {
-            name: name,
-            ramUsage: ramMemoryUsage(openedProgram.requiredSpace, this.ramMemory),
-            cpuUsage: cpuUsage(openedProgram.requiredSpace, this.cpuGHz),
+            name,
+            ramUsage: ramMemoryUsage(programToOpen.requiredSpace, this.ramMemory),
+            cpuUsage: cpuUsage(programToOpen.requiredSpace, this.cpuGHz),
         }
+
+        this.totalRamUsage += currentProgram.ramUsage;
+        this.totalCpuUsage += currentProgram.cpuUsage;
         
-        if (totalRamUsage >= 100.0 && totalCpuUsage >= 100.0) {
+
+        if (this.totalRamUsage >= 100.0
+            && this.totalCpuUsage >= 100.0) {
             throw new Error(`${name} caused out of memory exception`)
         }
 
-        if (totalRamUsage >= 100.0) {
+        if (this.totalRamUsage >= 100.0) {
             throw new Error(`${name} caused out of memory exception`)
         }
 
-        if (totalCpuUsage >= 100.0) {
+        if (this.totalCpuUsage >= 100.0) {
             throw new Error(`${name} caused out of cpu exception`)
         }
-
-        
 
         this.taskManager.push(currentProgram);
 
@@ -91,23 +91,44 @@ class Computer {
     }
 
     taskManagerView() {
-        let outPut = "";
-
         if (this.taskManager.length === 0) {
-            outPut += "All running smooth so far";
-           
-            return outPut.trim();
+            return "All running smooth so far";
         }
 
-        this.taskManager.forEach(p => {
-            let ram = p.ramUsage.toFixed(0);
-            let cpu = p.cpuUsage.toFixed(0);
-           
-            outPut += `Name - ${p.name} | Usage - CPU: ${cpu}%, RAM: ${ram}%\n`;
-        })
-
-        return outPut.trim();
+        return this.taskManager.
+            map(x =>
+                `Name - ${x.name} | Usage - CPU: ${x.cpuUsage.toFixed(0)}%, RAM: ${x.ramUsage.toFixed(0)}%`)
+            .join("\n");
     }
 }
+
+let computer = new Computer(4096, 7.5, 250000);
+
+computer.installAProgram('Word', 7300);
+computer.installAProgram('Excel', 10240);
+computer.installAProgram('PowerPoint', 12288);
+computer.uninstallAProgram('Word');
+computer.installAProgram('Solitare', 1500);
+
+computer.openAProgram('Excel');
+computer.openAProgram('Solitare');
+
+console.log(JSON.stringify(computer.installedPrograms, null, 2));
+console.log(('-').repeat(50)) // Separator
+console.log(JSON.stringify(computer.taskManager, null, 2));
+
+computer = new Computer(4096, 7.5, 250000);
+
+computer.installAProgram('Word', 7300);
+computer.installAProgram('Excel', 10240);
+computer.installAProgram('PowerPoint', 12288);
+computer.installAProgram('Solitare', 1500);
+
+computer.openAProgram('Word');
+computer.openAProgram('Excel');
+computer.openAProgram('PowerPoint');
+computer.openAProgram('Solitare');
+
+console.log(computer.taskManagerView());
 
 
