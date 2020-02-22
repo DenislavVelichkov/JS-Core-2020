@@ -14,16 +14,6 @@ describe('Test Christmas Movie functionality', function () {
     actors = ['Macaulay Culkin', 'Joe Pesci', 'Daniel Stern'];
   });
 
-  describe("test constructor()", function () {
-
-    it("Should add movie to collection", function () {
-      expect(movie.movieCollection).deep.equal([]);
-      expect(movie.watched).deep.equal({});
-      expect(movie.actors).deep.equal([]);
-    });
-
-  });
-
   describe("test buyMovie()", function () {
 
     it("Should add movie to collection", function () {
@@ -84,6 +74,7 @@ describe('Test Christmas Movie functionality', function () {
   });
 
   describe("test favouriteMovie()", function () {
+    
     it("Should throw error if no movie has been watched", function () {
       let result = () => movie.favouriteMovie();
 
