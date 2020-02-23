@@ -13,7 +13,6 @@ function solve() {
 
    function createArticle(ev) {
       let author = html.authorInput.value;
-      console.log(author)
       let title = html.titleInput.value;
       let category = html.categoryInput.value;
       let content = html.contentInput.value;
@@ -43,7 +42,8 @@ function solve() {
    }
 
    function archiveArticle(ev) {
-      let articleTitle = document.querySelector(".site-content").childNodes[1].childNodes[1].childNodes[3].childNodes[0].textContent;
+       console.log()
+      let articleTitle = ev.target.parentNode.parentNode.childNodes[0].textContent;
       let archiveArticle = createHTMLElement("li", null, articleTitle, null, null)
       html.archiveSection.appendChild(archiveArticle)
       ev.target.parentNode.parentNode.remove()
@@ -63,7 +63,7 @@ function solve() {
              
          }
 
-         return result; //!== 0 ? result : a.textContent.length - b.textContent.length;
+         return result !== 0 ? result : a.textContent.length - b.textContent.length;
      });
 
      html.archiveSection.value = "";

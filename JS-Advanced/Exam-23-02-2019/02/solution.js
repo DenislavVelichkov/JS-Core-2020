@@ -17,7 +17,7 @@ class Article {
       return `${this._likes[0]} likes this article!`
     }
 
-    return `${this._likes[0]} and ${this._likes.length - 2} others like this article!`
+    return `${this._likes[0]} and ${this._likes.length - 1} others like this article!`
   }
 
   like(username) {
@@ -86,8 +86,7 @@ class Article {
         return a.Id - b.Id;
       }).forEach(c => {
         c.Replies.sort((a, b) => a.Id - b.Id)
-
-        output += c.Replies.join("\n")
+        
       })
 
         break;
@@ -96,8 +95,7 @@ class Article {
           return b.Id - a.Id;
         }).forEach(c => {
           c.Replies.sort((a, b) => b.Id - a.Id)
-  
-          output += c.Replies.join("\n")
+
         })
 
         break;
@@ -109,10 +107,13 @@ class Article {
 
         break;
     }
-
-     
-
-    return output += this._comments.map(c => `-- ${c.Id}. ${c.Username}: ${c.Content}\n${c.Replies.map(r => `--- ${r.Id}. ${r.Username}: ${r.Content}`).join("\n")}`);
+    this._comments.map(c => {
+      let entry = `-- ${c.Id}. ${c.Username}: ${c.Content}\n${c.Replies.map(r => `--- ${r.Id}. ${r.Username}: ${r.Content}`).join("\n")}`
+      return entry;
+    }).forEach(c => output += c);
+    
+    
+    return output;
   }
 }
 let art = new Article("My Article", "Anny");

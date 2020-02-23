@@ -75,7 +75,7 @@ class ChristmasDinner {
 
   canWePrepareDish(recipe) {
     let isProductPresent = true;
-
+// 
     Array.from(recipe.productsList).forEach(p => {
       if (!this.products.find(product => product.type === p)) {
         isProductPresent = false
