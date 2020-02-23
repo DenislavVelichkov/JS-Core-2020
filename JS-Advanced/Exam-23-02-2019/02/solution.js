@@ -38,6 +38,7 @@ class Article {
     if (!this._likes.includes(username)) {
       throw new Error("You can't dislike this article!")
     }
+
     this._likes = this._likes.filter(u => u !== username)
 
     return `${username} disliked ${this.title}`
@@ -73,7 +74,7 @@ class Article {
 
   toString(sortingType) {
     let output =
-      `Title: ${this.title}\n`
+      `\nTitle: ${this.title}\n`
       + `Creator: ${this.creator}\n`
       + `Likes: ${this._likes.length}\n`
       + `Comments:\n`
@@ -86,7 +87,6 @@ class Article {
         return a.Id - b.Id;
       }).forEach(c => {
         c.Replies.sort((a, b) => a.Id - b.Id)
-        
       })
 
         break;
@@ -95,7 +95,6 @@ class Article {
           return b.Id - a.Id;
         }).forEach(c => {
           c.Replies.sort((a, b) => b.Id - a.Id)
-
         })
 
         break;
@@ -107,15 +106,16 @@ class Article {
 
         break;
     }
+
     this._comments.map(c => {
       let entry = `-- ${c.Id}. ${c.Username}: ${c.Content}\n${c.Replies.map(r => `--- ${r.Id}. ${r.Username}: ${r.Content}`).join("\n")}`
       return entry;
     }).forEach(c => output += c);
     
-    
     return output;
   }
 }
+
 let art = new Article("My Article", "Anny");
 art.like("John");
 console.log(art.likes);
@@ -131,4 +131,5 @@ console.log(art.toString('username'));
 console.log()
 art.like("Zane");
 console.log(art.toString('desc'));
+
 

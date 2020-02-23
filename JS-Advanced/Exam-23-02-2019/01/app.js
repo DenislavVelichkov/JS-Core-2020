@@ -18,12 +18,12 @@ function solve() {
       let content = html.contentInput.value;
       let newArticle = createHTMLElement("article", null, null, null, null);
       let h1 = createHTMLElement("h1", null, title, null, null);
-      let p = createHTMLElement("p", null, "Category: ", null, null, null)
-      let strong = createHTMLElement("strong", null, category, null, null, null)
-      let p1 = createHTMLElement("p", null, "Creator: ", null, null, null)
-      let strong1 = createHTMLElement("strong", null, author, null, null, null)
-      let p3 = createHTMLElement("p", null, content, null, null, null)
-      let div = createHTMLElement("div", {key: "class", value: ["buttons"]}, null, null, null, null)
+      let p = createHTMLElement("p", null, "Category: ", null, null)
+      let strong = createHTMLElement("strong", null, category, null, null)
+      let p1 = createHTMLElement("p", null, "Creator: ", null, null)
+      let strong1 = createHTMLElement("strong", null, author, null, null)
+      let p3 = createHTMLElement("p", null, content, null, null)
+      let div = createHTMLElement("div", {key: "class", value: ["buttons"]}, null, null, null)
       let deleteBtn = createHTMLElement("button", {key: "class", value: ["btn", "delete"]}, "Delete", null, {name: "click", func: deleteArticle})
       let archiveBtn = createHTMLElement("button", {key: "class", value: ["btn", "archive"]}, "Archive", null, {name: "click", func: archiveArticle})
       
@@ -42,7 +42,6 @@ function solve() {
    }
 
    function archiveArticle(ev) {
-       console.log()
       let articleTitle = ev.target.parentNode.parentNode.childNodes[0].textContent;
       let archiveArticle = createHTMLElement("li", null, articleTitle, null, null)
       html.archiveSection.appendChild(archiveArticle)
@@ -52,34 +51,24 @@ function solve() {
          let result = a.textContent.localeCompare(b.textContent);
 
          if(result === 1) {
-      
              html.archiveSection.insertBefore(b, a);
-             
          }
 
          if(result === -1){
-             
              html.archiveSection.insertBefore(a, b);  
-             
          }
 
-         return result !== 0 ? result : a.textContent.length - b.textContent.length;
+         return result !== 0 ? result : 1;
      });
 
-     html.archiveSection.value = "";
-    
+     ev.preventDefault();
    }
 
    function deleteArticle(ev){
-      ev.preventDefault()
-
       ev.target.parentNode.parentNode.remove()
    }
 
-
-
    function createHTMLElement(tagName, identity, textContent, attributes, event) {
-
       let newElemenet = document.createElement(tagName);
 
       if (identity) {

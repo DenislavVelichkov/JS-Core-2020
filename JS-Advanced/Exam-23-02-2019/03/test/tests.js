@@ -12,7 +12,7 @@ describe("MyTests", () => {
 
     describe('Test Constructor', () => {
         it('constructor()', () => {
-            let data = JSON.parse('[{ "Nancy": "architect" }, { "John": "developer" }, { "Kate": "HR" }]');
+            let data = JSON.parse('[{ "Nancy": "architect" }, { "John": "developer" }, { "Kate": "HR" }]')
             let result = parser._addToLog()
 
             expect(parser.data).deep.equal(data)
@@ -32,6 +32,7 @@ describe("MyTests", () => {
             let result = parser.addEntries("Steven:tech-support Edd:administrator")
 
             expect(result).deep.equal('Entries added!')
+            expect(parser._log).deep.equal([ '0: addEntries' ])
         });
 
         it('Test remove error', () => {
