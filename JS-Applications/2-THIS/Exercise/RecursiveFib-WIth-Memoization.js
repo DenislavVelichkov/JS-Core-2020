@@ -19,4 +19,4 @@ let fib = (n) => {
     return result;
 }
 
-console.log(fib(8));
+console.log(fib(9));
