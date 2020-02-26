@@ -111,7 +111,7 @@ class Article {
       let entry = `-- ${c.Id}. ${c.Username}: ${c.Content}\n${c.Replies.map(r => `--- ${r.Id}. ${r.Username}: ${r.Content}`).join("\n")}`
       return entry;
     }).forEach(c => output += c);
-    
+
     return output;
   }
 }
@@ -123,7 +123,7 @@ art.dislike("John");
 console.log(art.likes);
 art.comment("Sammy", "Some Content");
 console.log(art.comment("Ammy", "New Content"));
-art.comment("Zane", "Reply", 1);
+art.comment("Zane", "Reply", 1)
 art.comment("Jessy", "Nice :)");
 console.log(art.comment("SAmmy", "Reply@", 1));
 console.log()
@@ -131,5 +131,3 @@ console.log(art.toString('username'));
 console.log()
 art.like("Zane");
 console.log(art.toString('desc'));
-
-
