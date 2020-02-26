@@ -1,22 +1,22 @@
-const memo = [];
+const memo = []
 
-let fib = (n) => {
-    if (n === 1) {
-        return 1;
-    }
+const fib = n => {
+  if (n === 1) {
+    return 1
+  }
 
-    if (n === 0) {
-        return 0;
-    }
+  if (n === 0) {
+    return 0
+  }
 
-    if (memo[n] !== undefined) {
-        return memo[n];
-    }
+  if (memo[n] !== undefined) {
+    return memo[n]
+  }
 
-    let result = fib(n - 1) + fib(n - 2);
-    memo[n] = result;
+  const result = fib(n - 1) + fib(n - 2)
+  memo[n] = result
 
-    return result;
+  return result
 }
 
-console.log(fib(9));
+console.log(fib(9))
