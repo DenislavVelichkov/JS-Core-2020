@@ -1,9 +1,11 @@
-var memo = [];
+const memo = [];
 
-function fib(n) {
+let fib = (n) => {
     if (n === 1) {
         return 1;
-    } else if (n === 0) {
+    }
+
+    if (n === 0) {
         return 0;
     }
 
@@ -15,6 +17,6 @@ function fib(n) {
     memo[n] = result;
 
     return result;
-
-
 }
+
+console.log(fib(8));
