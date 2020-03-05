@@ -20,6 +20,8 @@ function solve () {
     collectSalary () {
       console.log(`${this.name} received ${this.getSalary()} this month`)
     }
+
+
   }
 
   class Junior extends Employee {
@@ -43,12 +45,12 @@ function solve () {
   class Manager extends Employee {
     constructor (name, age) {
       super(name, Number(age))
-      this.divident = 0
+      this.dividend = 0
       this.tasks = [` scheduled a meeting.`, ` is preping a quarterly report.`]
     }
 
     getSalary () {
-      return this.salary + this.divident
+      return this.salary + this.dividend
     }
   }
 
