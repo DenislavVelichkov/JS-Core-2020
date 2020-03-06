@@ -18,27 +18,49 @@ function solve () {
       this.comments = []
     }
 
-    addComment(comment) {
+    addComment (comment) {
       this.comments.push(comment)
     }
 
-    toString() {
-      let output = `Post: ${this.postTitle}\n`
-      + `Content: ${this.postContent}\n`
-      + `Rating: ${this.likes - this.dislikes}\n`
+    toString () {
+      let output =
+        `Post: ${this.postTitle}\n` +
+        `Content: ${this.postContent}\n` +
+        `Rating: ${this.likes - this.dislikes}\n`
 
       if (!this.comments) {
         return output
       }
 
-      return output
-           + `Comments:\n`
-           + `${this.comments.map(c => ` * ${c}`).join("\n")}`
+      return (
+        output +
+        `Comments:\n` +
+        `${this.comments.map(c => ` * ${c}`).join('\n')}`
+      )
+    }
+  }
+
+  class BlogPost extends Post {
+    constructor(title, content, views) {
+      super(title, content)
+      this.views = Number(views)
     }
 
-  }
-      class BlogPost extends Post {}
+    view() {
+      this.views++
 
+      return this
+    }
+
+    toString() {
+      let output =
+        `Post: ${this.postTitle}\n` +
+        `Content: ${this.postContent}\n` +
+        `Views: ${this.views}`
+
+        return output
+    }
+  }
 
   // let post = new Post('Alabala', 'Alabala')
   // let mediaPost = new SocialMediaPost('dasdsadsa', 'adsaddsa', 10, 5)
