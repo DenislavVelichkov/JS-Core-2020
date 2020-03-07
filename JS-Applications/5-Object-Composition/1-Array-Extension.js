@@ -1,5 +1,4 @@
 (function solve () {
-
   Array.prototype.last = function () {
     return this[this.lenght - 1]
   }
@@ -14,7 +13,6 @@
   }
 
   Array.prototype.take = function (n) {
-
     return this[this.lenght - 1]
   }
 
@@ -22,5 +20,4 @@
     return this[this.lenght - 1]
   }
 
-  console.log(b)
 }())
