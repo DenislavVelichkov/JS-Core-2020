@@ -2,12 +2,12 @@ function solve() {
 
   class Post {
     constructor(title, content) {
-      this.postTitle = title
-      this.postContent = content
+      this.title = title
+      this.content = content
     }
 
     toString() {
-      return `Post: ${this.postTitle}\nContent: ${this.postContent}\n`
+      return `Post: ${this.title}\nContent: ${this.content}\n`
     }
 
   }
