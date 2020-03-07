@@ -1,4 +1,4 @@
-(() => {
+function solve () {
   class Employee {
     constructor(name, age) {
 
@@ -7,19 +7,19 @@
       }
 
       this.name = name
-      this.age = Number(age)
+      this.age = age
       this.salary = 0
       this.tasks = []
     }
 
     work() {
       let currentTask = this.tasks.shift()
-      console.log(`${this.name} + ${currentTask}`)
+      console.log(this.name + currentTask)
       this.tasks.push(currentTask)
     }
 
     collectSalary() {
-      console.log(`${this.name} received ${this.salary} this month`)
+      console.log(`${this.name} received ${this.salary} this month.`)
     }
 
   }
@@ -46,11 +46,15 @@
     constructor(name, age) {
       super(name, age)
       this.dividend = 0
-      this.tasks = [` scheduled a meeting.`, ` is preping a quarterly report.`]
+      this.tasks = [` scheduled a meeting.`, ` is preparing a quarterly report.`]
+    }
+
+    getSalary() {
+      return this.salary + this.dividend
     }
 
     collectSalary() {
-      console.log(`${this.name} received ${this.salary + this.dividend} this month`)
+      console.log(`${this.name} received ${this.getSalary()} this month.`)
     }
   }
 
@@ -61,4 +65,4 @@
     Manager
   }
 
-})()
+}
