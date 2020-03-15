@@ -1,6 +1,10 @@
-function attachEvents() {
-    const url = "https://rest-messanger.firebaseio.com/messanger.json";
+function solve() {
+    const url = "https://messages-8cc67.firebaseio.com/messenger.json";
     const messagesData = document.getElementById("messages");
+    const sendBtn = document.getElementById("submit")
+    sendBtn.addEventListener("click", submitMessage)
+    const refreshBtn = document.getElementById("refresh")
+    refreshBtn.addEventListener("click", refreshMessages)
 
     function refreshMessages() {
         let inputMessages = [];
@@ -19,7 +23,7 @@ function attachEvents() {
 
                 messagesData.textContent = inputMessages.join("\n");
             })
-            .catch(() => console.log("Error!!!"));
+            .catch((e) => console.log(e));
     }
 
     function submitMessage() {
@@ -27,29 +31,26 @@ function attachEvents() {
         const message = document.getElementById("content").value;
 
         const headers = {
+            "Content-Type": "application/json"
+        }
+
+
+        fetch(url, {
+            headers: headers,
             method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
             body: JSON.stringify({
                 author: name,
                 content: message
             })
-        };
-
-        fetch(url, headers)
+        })
             .then(() => {
                 document.getElementById("author").value = "";
                 document.getElementById("content").value = "";
 
                 refreshMessages();
             })
-            .catch(() => console.log("Error!!!"));
+            .catch((e) => console.log(e));
     }
-
-    return {
-        refreshMessages,
-        submitMessage
-    };
 }
-attachEvents();
+
+solve();

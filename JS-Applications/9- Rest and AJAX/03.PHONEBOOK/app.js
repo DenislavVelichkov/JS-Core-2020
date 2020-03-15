@@ -1,4 +1,4 @@
-function attachEvents() {
+function solve() {
     const url = "https://phone-book-fe9f7.firebaseio.com/phonebook.json"
     const phoneBookData = document.getElementById("phonebook")
 
@@ -71,10 +71,10 @@ function attachEvents() {
     }
 
     const createBtn = document.querySelector("#btnCreate")
-    createBtn.addEventListener('click', createPhone)
+    createBtn.addEventListener("click", createPhone)
 
     const loadBtn = document.querySelector("#btnLoad")
-    loadBtn.addEventListener('click', loadPhoneBook)
+    loadBtn.addEventListener("click", loadPhoneBook)
 }
 
-attachEvents();
+solve();
