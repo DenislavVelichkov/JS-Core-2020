@@ -3,11 +3,11 @@ import {
 } from './fetch.js';
 
 const html = {
-    submitButton: () => document.getElementById("submit"),
-    locationName: () => document.getElementById("location"),
-    forecastSection: () => document.getElementById("forecast"),
-    currentForecast: () => document.getElementById("current"),
-    upcomingForecast: () => document.getElementById("upcoming")
+    submitButton: document.getElementById("submit"),
+    locationName: document.getElementById("location"),
+    forecastSection: document.getElementById("forecast"),
+    currentForecast: document.getElementById("current"),
+    upcomingForecast: document.getElementById("upcoming")
 };
 
 const symbols = {
