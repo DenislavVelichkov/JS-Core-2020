@@ -1,37 +1,37 @@
 function solve() {
-    const departButton = document.getElementById("depart");
-    const arriveButton = document.getElementById("arrive");
-    const info = document.getElementsByClassName("info")[0];
+    const departButton = document.getElementById("depart")
+    const arriveButton = document.getElementById("arrive")
+    const info = document.getElementsByClassName("info")[0]
 
-    let currentId = "depot";
+    let currentId = "depot"
 
     function depart() {
-        let url = `https://bust-schedule.firebaseio.com/schedule/${currentId}.json`;
+        let url = `https://bust-schedule.firebaseio.com/schedule/${currentId}.json`
 
         fetch(url)
             .then(resources => resources.json())
             .then(data => {
-                info.textContent = `Next stop ${data.name}`;
+                info.textContent = `Next stop ${data.name}`
             })
-            .catch(RaiseError());
+            .catch(RaiseError())
 
-        departButton.disabled = true;
-        arriveButton.disabled = false;
+        departButton.disabled = true
+        arriveButton.disabled = false
     }
 
     function arrive() {
-        let url = `https://bust-schedule.firebaseio.com/schedule/${currentId}.json`;
+        let url = `https://bust-schedule.firebaseio.com/schedule/${currentId}.json`
 
         fetch(url)
-            .then(resources => resources.json())
+            .then(r => r.json())
             .then(data => {
-                info.textContent = `Arriving at ${data.name}`;
-                currentId = data.next;
+                info.textContent = `Arriving at ${data.name}`
+                currentId = data.next
             })
             .catch(RaiseError());
 
-        departButton.disabled = false;
-        arriveButton.disabled = true;
+        departButton.disabled = false
+        arriveButton.disabled = true
     }
 
     return {

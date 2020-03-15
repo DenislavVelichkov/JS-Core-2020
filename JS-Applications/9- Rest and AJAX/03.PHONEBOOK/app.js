@@ -3,8 +3,8 @@ function solve() {
     const phoneBookData = document.getElementById("phonebook")
 
     function createPhone() {
-        const person = document.getElementById("person").value;
-        const phone = document.getElementById("phone").value;
+        const person = document.getElementById("person").value
+        const phone = document.getElementById("phone").value
         const recordToAdd = { person, phone }
 
         const headers = {
@@ -16,12 +16,12 @@ function solve() {
         };
 
         fetch(url, headers)
-            .then((response) => response.json())
+            .then((r) => r.json())
             .then(data => {
-                document.getElementById("person").value = "";
-                document.getElementById("phone").value = "";
+                document.getElementById("person").value = ""
+                document.getElementById("phone").value = ""
 
-                createDbRecord(recordToAdd, data.name);
+                createDbRecord(recordToAdd, data.name)
             })
             .catch((e) => console.log(e));
     }
@@ -30,14 +30,14 @@ function solve() {
         fetch(url)
             .then(r => r.json())
             .then(data => {
-                phoneBookData.innerHTML = "";
+                phoneBookData.innerHTML = ""
 
                 Object.entries(data).forEach((record) => {
                     const [recordId, personInfo] = record
 
                     if (recordId && personInfo) {
 
-                        createDbRecord(personInfo, recordId);
+                        createDbRecord(personInfo, recordId)
                     }
 
                 })
@@ -47,7 +47,7 @@ function solve() {
 
 
     function deletePhone() {
-        const recordToRemove = this.parentNode;
+        const recordToRemove = this.parentNode
         const deleteQuery =
             `https://phone-book-fe9f7.firebaseio.com/phonebook/${recordToRemove.id}.json`
 
@@ -55,19 +55,19 @@ function solve() {
             .then(() => {
                 recordToRemove.remove()
             })
-            .catch(() => console.log("Error"));
+            .catch(() => console.log("Error"))
 
     }
 
     function createDbRecord(personInfo, recordId) {
-        const li = document.createElement("li");
-        li.textContent = `${personInfo.person}: ${personInfo.phone}`;
-        li.id = recordId;
-        const deleteButton = document.createElement("button");
-        deleteButton.textContent = "Delete";
-        deleteButton.addEventListener("click", deletePhone);
-        li.appendChild(deleteButton);
-        phoneBookData.appendChild(li);
+        const li = document.createElement("li")
+        li.textContent = `${personInfo.person}: ${personInfo.phone}`
+        li.id = recordId
+        const deleteButton = document.createElement("button")
+        deleteButton.textContent = "Delete"
+        deleteButton.addEventListener("click", deletePhone)
+        li.appendChild(deleteButton)
+        phoneBookData.appendChild(li)
     }
 
     const createBtn = document.querySelector("#btnCreate")
@@ -77,4 +77,4 @@ function solve() {
     loadBtn.addEventListener("click", loadPhoneBook)
 }
 
-solve();
+solve()
