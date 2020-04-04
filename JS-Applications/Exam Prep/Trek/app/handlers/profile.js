@@ -11,8 +11,10 @@ export async function profileHandler() {
     let personalTreks = await requester.asset.getAll();
 
     this.asset = Object.entries(personalTreks || {})
-        .filter(t => t[1].createdByName === userEmail)
-        .map(([trekId, trek]) => ({ ...trek, trekId }));
+    .filter(t => t[1].createdByName === userEmail)
+    .map(([trekId, trek]) => ({ ...trek, trekId }));
+    this.personalTreksCount = this.asset.length;
+    this.username = sessionStorage.getItem("email");
 
     this.partial('./templates/profile/profile.hbs');
 }

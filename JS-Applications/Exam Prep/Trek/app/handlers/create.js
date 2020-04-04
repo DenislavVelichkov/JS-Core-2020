@@ -85,7 +85,7 @@ export async function createTrekHandler() {
             throw new Error(toastr.error("Location name must be atleast 6 characters long."));
         }
 
-        if (formValue.description.lenght < 10) {
+        if (formValue.description.length < 10) {
 
             throw new Error(toastr.error("Location name must be atleast 10 characters long."));
         }

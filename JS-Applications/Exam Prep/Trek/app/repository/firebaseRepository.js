@@ -19,10 +19,7 @@ export const RestClient = (apiKey, collectionName, token) => {
      */
     const getAll = () => {
         return fetch(collectionUrl + '.json' + (token ? `?auth=${token}`:''))
-        .then(x => {
-            toastr.warning("Loading")
-            return x.json();
-        }).then(() => toastr.clear());
+        .then(x => x.json());
     };
 
     /**
@@ -31,10 +28,7 @@ export const RestClient = (apiKey, collectionName, token) => {
      */
     const getById = (id) => {
         return fetch(`${collectionUrl}/${id}.json`+ (token ? `?auth=${token}`:''))
-        .then(x => {
-            toastr.warning("Loading")
-            return x.json();
-        }).then(() => toastr.clear());
+        .then(x => x.json());
     };
 
     /**
@@ -45,10 +39,8 @@ export const RestClient = (apiKey, collectionName, token) => {
         return fetch(collectionUrl + '.json'+ (token ? `?auth=${token}`:''), {
             method: 'POST',
             body: JSON.stringify(entityBody)
-        }).then(x => {
-            toastr.warning("Loading")
-            return x.json();
-        }).then(() => toastr.clear());
+        }).then(x => x.json());
+
     };
 
     /**
@@ -60,10 +52,7 @@ export const RestClient = (apiKey, collectionName, token) => {
         return fetch(`${collectionUrl}/${id}.json`+ (token ? `?auth=${token}`:''), {
             method: 'PUT',
             body: JSON.stringify(entityBody)
-        }).then(x => {
-            toastr.warning("Loading")
-            return x.json();
-        }).then(() => toastr.clear());
+        }).then(x => x.json());
     };
 
     /**
@@ -75,10 +64,7 @@ export const RestClient = (apiKey, collectionName, token) => {
         return fetch(`${collectionUrl}/${id}.json`+ (token ? `?auth=${token}`:''), {
             method: 'PATCH',
             body: JSON.stringify(entityBody)
-        }).then(x => {
-            toastr.warning("Loading")
-            return x.json();
-        }).then(() => toastr.clear());
+        }).then(x => x.json());
     };
 
     /**
@@ -88,10 +74,7 @@ export const RestClient = (apiKey, collectionName, token) => {
     const deleteEntity = (id) => {
         return fetch(`${collectionUrl}/${id}.json`+ (token ? `?auth=${token}`:''), {
             method: 'DELETE'
-        }).then(x => {
-            toastr.warning("Loading")
-            return x.json();
-        }).then(() => toastr.clear());
+        }).then(x => x.json());
     };
 
     return {

@@ -1,16 +1,14 @@
 {{>header}}
 
-<div id="treks-list">
+<div class="profile col-md-6 text-center col-lg">
+  <img class="profile-img" src="../../images/user.png" />
+  <div class="profile-info">
+    <p>Username: <small>{{username}}</small></p>
+    <p class="infoType">Wished {{personalTreksCount}} treks =)</p>
     {{#each asset}}
-    <a href="#/details/{{trekId}}" class="card overflow-hidden treksPlaceholder trek-details" style="width: 20rem; height: 18rem;">
-      <div class="card-body">
-        <p class="card-text">{{location}}</p>
-      </div>
-      <img class="card-image"
-        src="{{imageURL}}"
-        alt="Card image cap">
-    </a>
-     {{/each}}
+    <p>{{location}}</p>
+    {{/each}}
   </div>
+</div>
 
 {{>footer}}

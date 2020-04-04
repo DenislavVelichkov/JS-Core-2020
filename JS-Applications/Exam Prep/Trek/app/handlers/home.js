@@ -7,9 +7,11 @@ export async function homeViewHandler() {
      */
     await applyCommon.call(this);
 
+    toastr.warning("Loading...")
     let treks = await requester.asset.getAll();
+    toastr.clear()
 
-    this.asset = Object.entries(treks || {}).map(([trekId, trek]) => ({...trek, trekId}) );
+    this.asset = Object.entries(treks || {}).map(([trekId, trek]) => ({...trek, trekId}));
 
     this.loggedInWithTreks = sessionStorage.getItem('token') && this.asset.length > 0;
 
