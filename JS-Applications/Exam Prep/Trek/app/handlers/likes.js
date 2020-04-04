@@ -7,6 +7,6 @@ export async function likesHandler() {
     }, this.params.id);
 
     this.redirect(`#/details/${this.params.id}`);
-    return false;
 
+    return false;
 }

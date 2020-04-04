@@ -1,8 +1,7 @@
 {{> header }}
 <div class="row single-trek-details text-center">
     <div class="col-md-12 text-center overflow-hidden">
-        <img class="details-img"
-            src="https://s3.us-east-1.wasabisys.com/mts-wp-uploads/trips/trip_hero8_kha_2880x1260.jpg" />
+        <img class="details-img" src="{{imageURL}}" />
         <div class="overflow-hidden my-3 p-3">
             <h2 class="display-5">{{location}}</h2>
             <p class="infoType">Description:</p>
@@ -16,7 +15,7 @@
         </div>
         <div class="buttons-together">
             {{#if userIsCreator}}
-                        <a class="a-button" href="#/edit/{{trekId}}">
+            <a class="a-button" href="#/edit/{{trekId}}">
                 <svg version="1.1" id="edit-button" width="30px" xmlns="http://www.w3.org/2000/svg"
                     xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 293.129 293.129"
                     style="enable-background:new 0 0 293.129 293.129;" xml:space="preserve">

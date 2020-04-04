@@ -1,5 +1,5 @@
-import {applyCommon} from './common.js';
-import {requester} from '../services/authService.js';
+import { applyCommon } from './common.js';
+import { requester } from '../services/authService.js';
 
 export async function detailsHandler() {
     /**
@@ -7,7 +7,8 @@ export async function detailsHandler() {
      *
      * -- this.params comes from the navigation url!!
      */
-    this.teamId = this.params.id;
+    // this.teamId = this.params.id;
+
     let {
         createdByName,
         dateTime,
@@ -17,6 +18,7 @@ export async function detailsHandler() {
         location,
         createdById
     } = await requester.asset.getById(this.params.id);
+
     this.trekId = this.params.id;
     this.dateTime = dateTime;
     this.description = description;

@@ -1,7 +1,7 @@
 import { RestClient } from '../repository/firebaseRepository.js';
 
 /**
- * Creates object that support CRUD operations over set of entities 
+ * Creates object that support CRUD operations over set of entities
  */
 export const requester = (() => {
     let _asset;
@@ -16,7 +16,7 @@ export const requester = (() => {
     };
 
     /**
-     * Initialize singleton request objet to be used across the application 
+     * Initialize singleton request objet to be used across the application
      * @param {string} firebaseApiKey sets the firebaseApiKey to which we will make requests
      * @param {string} token optionally sets the auth token
      */
@@ -25,7 +25,7 @@ export const requester = (() => {
         _asset = RestClient(apiKey, 'treks', token);
     };
 
-    /** 
+    /**
      * Return all supported collection + config functions
      */
     return {
@@ -37,4 +37,3 @@ export const requester = (() => {
         },
     };
 })();
-

@@ -1,8 +1,5 @@
-import { NO_VALUE } from '../utils/constants.js';
-import { requester } from '../services/authService.js';
-
 export async function applyCommon() {
-    /** 
+    /**
      * Gets data about the user and adds it the context
      */
     this.email = sessionStorage.getItem('email');
@@ -16,15 +13,4 @@ export async function applyCommon() {
         header: await this.load('./templates/common/header.hbs'),
         footer: await this.load('./templates/common/footer.hbs')
     };
-    /**
-     * Keep in mind the next lines are not very efficient, because
-     * each time a path is accessed and a user is logged in we will make request to get data about the user
-     */
-    // if (sessionStorage.getItem('userId')) {
-    //     this.hasNoTeam = await requester.userMeta
-    //         .getById(sessionStorage.getItem('userId'))
-    //         .then(res => {
-    //             return  !res || (res && res.team == NO_VALUE);
-    //         });
-    // }
 }
