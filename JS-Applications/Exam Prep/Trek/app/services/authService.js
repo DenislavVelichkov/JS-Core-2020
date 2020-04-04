@@ -1,10 +1,10 @@
-import { fireBaseRequestFactory } from './firebase-requests.js';
+import { RestClient } from '../repository/firebaseRepository.js';
 
 /**
  * Creates object that support CRUD operations over set of entities 
  */
 export const requester = (() => {
-    let _treks;
+    let _asset;
     let apiKey;
 
     /**
@@ -12,7 +12,7 @@ export const requester = (() => {
      * @param {string} token firebaseAuthToken
      */
     let setAuthToken = (token) => {
-        _treks = fireBaseRequestFactory(apiKey, 'treks', token);
+        _asset = RestClient(apiKey, 'treks', token);
     };
 
     /**
@@ -22,7 +22,7 @@ export const requester = (() => {
      */
     let init = (firebaseApiKey,token = null) => {
         apiKey = firebaseApiKey;
-        _treks = fireBaseRequestFactory(apiKey, 'treks', token);
+        _asset = RestClient(apiKey, 'treks', token);
     };
 
     /** 
@@ -31,10 +31,10 @@ export const requester = (() => {
     return {
         init,
         setAuthToken,
-        _treks
-        // get treks(){
-        //     return _treks
-        // },
+        _asset: _asset,
+        get asset(){
+            return _asset
+        },
     };
 })();
 

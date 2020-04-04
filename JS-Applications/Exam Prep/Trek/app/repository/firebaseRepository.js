@@ -3,7 +3,7 @@
  * @param {string} apiKey firebase database url
  * @param {string} collectionName entity name
  */
-export const fireBaseRequestFactory = (apiKey, collectionName, token) => {
+export const RestClient = (apiKey, collectionName, token) => {
     if (!apiKey) {
         throw new Error('You must provide api key');
     }

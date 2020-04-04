@@ -1,4 +1,4 @@
-import { requester } from './services/app-service.js';
+import { requester } from './services/authService.js';
 import {
     homeViewHandler,
     aboutViewHandler,
@@ -14,12 +14,12 @@ import {
     createTrekHandler
 } from './handlers/index.js';
 
-const apiKey = 'https://exam-e8076.firebaseio.com/';
+const apiKey = 'https://fir-playground-6c579.firebaseio.com/';
 requester.init(apiKey, sessionStorage.getItem('token'));
 
 
 /**
- * Configure the application with all it's routes and the template engine that it uses
+ * Configure the application with all it's routes and the template engine that it uses 
  */
 const app = Sammy('#main', function () {
     /**
@@ -32,16 +32,16 @@ const app = Sammy('#main', function () {
      */
     this.get('#/', homeViewHandler);
     this.get('#/home', homeViewHandler);
-    /**
-     * Register
+    /** 
+     * Register 
      */
     this.get('#/register', registerViewHandler);
     this.post('#/register', () => false);
-    /**
+    /** 
      * Logout
      */
     this.get('#/logout', logoutHandler);
-    /**
+    /** 
      * Login
      */
     this.get('#/login', loginHandler);
@@ -58,7 +58,7 @@ const app = Sammy('#main', function () {
     /**
      * Likes
      */
-    this.get('#/likes/:currentLikes/:id', likesHandler)
+    this.get('#/likes/:currentLikes/:id', likesHandler);
     /**
      * Edit
      */

@@ -1,5 +1,5 @@
-import { NO_VALUE } from './../utils.js';
-import { requester } from './../services/app-service.js';
+import { NO_VALUE } from '../utils/constants.js';
+import { requester } from '../services/authService.js';
 
 export async function applyCommon() {
     /** 

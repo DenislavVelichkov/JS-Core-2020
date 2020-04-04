@@ -1,7 +1,7 @@
-import { createFormEntity } from './../form-helpers.js';
+import { createFormEntity } from '../utils/formData.js';
 import { applyCommon } from './common.js';
-import { requester } from './../services/app-service.js';
-import { NO_VALUE } from './../utils.js';
+import { requester } from '../services/authService.js';
+import { NO_VALUE } from '../utils/constants.js';
 
 /**
  * Logs user

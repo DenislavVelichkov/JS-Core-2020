@@ -1,20 +1,20 @@
 import { applyCommon } from './common.js';
-import { createFormEntity } from './../form-helpers.js';
-import { requester } from './../services/app-service.js';
-import { NO_VALUE } from './../utils.js';
+import { createFormEntity } from '../utils/formData.js';
+import { requester } from '../services/authService.js';
+import { NO_VALUE } from '../utils/constants.js';
 
 export async function joinTeamHandler() {
     /**
      * Get data about the team the user wants to join
      * -- this.params comes from the url
      */
-    let team = await requester.teams.getById(this.params.id);
+    let team = await requester.asset.getById(this.params.id);
     /** 
      * Updates the user meta data with the id of the team he/she joins 
      * Updates the teamsData with the id and the name of the user that is joining
      */
-    await requester.userMeta.patchEntity({ team: this.params.id }, sessionStorage.getItem('userId'));
-    await requester.teams.patchEntity(
+    await requester.asset.patchEntity({ team: this.params.id }, sessionStorage.getItem('userId'));
+    await requester.asset.patchEntity(
         {
             teamMembers: [...(team.teamMembers || []),
             {
@@ -36,14 +36,14 @@ export async function leaveTeamHandler() {
      * Get data about the team the user wants to leave
      * -- this.params comes from the url
      */
-    let team = await requester.teams.getById(this.params.id);
+    let team = await requester.asset.getById(this.params.id);
 
     /** 
      * Updates the user meta data with the id of the team he/she leave 
      * Removes from teamsData the leaving user
      */
-    await requester.userMeta.patchEntity({ team: NO_VALUE, createdTeams: NO_VALUE }, sessionStorage.getItem('userId'));
-    await requester.teams.patchEntity(
+    await requester.asset.patchEntity({ team: NO_VALUE, createdTeams: NO_VALUE }, sessionStorage.getItem('userId'));
+    await requester.asset.patchEntity(
         {
             teamMembers: [
                 ...(team.teamMembers || [])
@@ -80,7 +80,7 @@ export async function createTrekHandler() {
         formValue.createdByName = sessionStorage.getItem('email');
         formValue.likes = 0;
 
-        await requester.treks.createEntity(formValue);
+        await requester.asset.createEntity(formValue);
 
         form.clear();
     });
@@ -102,7 +102,7 @@ export async function editHandler() {
     /**
      * Load and set the initial form value for edit
      */
-    const trekToEdit = await requester.treks.getById(this.params.id);
+    const trekToEdit = await requester.asset.getById(this.params.id);
     form.setValue(trekToEdit);
 
     formRef.addEventListener('submit', async e => {
@@ -110,6 +110,6 @@ export async function editHandler() {
         let form = createFormEntity(formRef, ['location', 'dateTime', 'description', 'imageURL']);
         let formValue = form.getValue();
 
-        await requester.treks.patchEntity(formValue, this.params.id);
+        await requester.asset.patchEntity(formValue, this.params.id);
     });
 }

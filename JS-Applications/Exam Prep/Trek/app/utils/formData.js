@@ -24,10 +24,10 @@ const clearForm = (formRef, formConfig) => {
 };
 
 /**
- *
+ * 
  * @param {HTMLElement} formRef Reference to html element of type 'form'
  * @param {string[]} formConfig string array describing the 'name' attribute of all inputs
- * inside the provided formRef
+ * inside the provided formRef 
  */
 export const createFormEntity = (formRef, formConfig) => {
     /**
@@ -37,7 +37,7 @@ export const createFormEntity = (formRef, formConfig) => {
 
     /**
      * Fills all possible form fields based on incoming object
-     * @param {{[key:string]}} formValue
+     * @param {{[key:string]}} formValue 
      */
     const setValue = (formValue) => fillFormWithData(formRef, formValue);
 
