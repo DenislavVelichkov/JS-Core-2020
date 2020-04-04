@@ -1,4 +1,5 @@
 import { RestClient } from '../repository/firebaseRepository.js';
+import { ASSET_NAME } from '../utils/constants.js';
 
 /**
  * Creates object that support CRUD operations over set of entities
@@ -12,7 +13,7 @@ export const requester = (() => {
      * @param {string} token firebaseAuthToken
      */
     let setAuthToken = (token) => {
-        _asset = RestClient(apiKey, 'treks', token);
+        _asset = RestClient(apiKey, ASSET_NAME, token);
     };
 
     /**
@@ -22,7 +23,7 @@ export const requester = (() => {
      */
     let init = (firebaseApiKey,token = null) => {
         apiKey = firebaseApiKey;
-        _asset = RestClient(apiKey, 'treks', token);
+        _asset = RestClient(apiKey, ASSET_NAME, token);
     };
 
     /**

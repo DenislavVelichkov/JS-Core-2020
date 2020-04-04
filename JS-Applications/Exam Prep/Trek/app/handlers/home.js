@@ -1,13 +1,11 @@
 import { applyCommon } from './common.js';
 import { requester } from '../services/authService.js';
-import { successNotification } from './../notifications.js'
 
 export async function homeViewHandler() {
     /**
      * Load hbs templates
      */
     await applyCommon.call(this);
-
 
     let treks = await requester.asset.getAll();
 
@@ -18,6 +16,4 @@ export async function homeViewHandler() {
     this.loggedInWithNoTreks = sessionStorage.getItem('token') && this.asset.length === 0;
 
     this.partial('./templates/home/home.hbs');
-
-    successNotification('Please work and disappear')
 }

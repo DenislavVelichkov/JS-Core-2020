@@ -8,8 +8,8 @@ import {
     detailsHandler,
     editHandler,
     likesHandler,
-    joinTeamHandler,
-    leaveTeamHandler,
+    // joinTeamHandler,
+    // leaveTeamHandler,
     deleteHandler,
     createTrekHandler
 } from './handlers/index.js';

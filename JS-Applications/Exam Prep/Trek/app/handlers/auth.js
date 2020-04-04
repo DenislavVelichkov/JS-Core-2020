@@ -1,7 +1,6 @@
 import { createFormEntity } from '../utils/formData.js';
 import { applyCommon } from './common.js';
 import { requester } from '../services/authService.js';
-import { NO_VALUE } from '../utils/constants.js';
 /**
  * Logs user
  */
@@ -25,7 +24,7 @@ export async function loginHandler() {
          * Authenticates a user with email and password
          */
         const loggedInUser = await firebase.auth().signInWithEmailAndPassword(formValue.email, formValue.password)
-        .catch(err => toastr.error(new Error("Incorrect credentials!")));
+            .catch(() => toastr.error(new Error("Incorrect credentials!")));
 
         const userToken = await firebase.auth().currentUser.getIdToken();
         sessionStorage.setItem('email', loggedInUser.user.email);
@@ -37,7 +36,7 @@ export async function loginHandler() {
         sessionStorage.setItem('token', userToken);
         requester.setAuthToken(userToken);
 
-        toastr.info("Successfully logged in!")
+        toastr.success("Successfully logged in!")
 
         this.redirect(['#/home']);
     });
@@ -59,13 +58,24 @@ export async function registerViewHandler() {
     let formRef = document.querySelector('form');
     formRef.addEventListener('submit', async (e) => {
         e.preventDefault();
+
         let form = createFormEntity(formRef, ['email', 'password', 'rePassword']);
         let formValue = form.getValue();
+        const emailValidation = new RegExp(/[a-zA-Z0-9_]{3,}@[A-Za-z0-9_]+.?-?[a-zA-Z0-9]+/gm);
 
         if (formValue.password !== formValue.rePassword) {
-            throw new Error('Password and repeat password must match');
+            throw new Error(toastr.error('Password and repeat password must match'));
         }
 
+        if (!emailValidation.test(formValue.email)) {
+            throw new Error(toastr.error('That does not seems like a valid email address!'));
+        }
+
+        if (formValue.password.length < 6) {
+            throw new Error(toastr.error('Password must be atleast 6 characters long!'));
+        }
+
+        toastr.success("Successfully registered user!")
         /**
          * Creates new user
          */
@@ -92,6 +102,9 @@ export async function registerViewHandler() {
  */
 export function logoutHandler() {
     sessionStorage.clear();
-    firebase.auth().signOut();
+    firebase.auth().signOut()
+
+    toastr.success("Logout successful.")
+
     this.redirect(['#/home']);
 }

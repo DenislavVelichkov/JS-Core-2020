@@ -6,6 +6,8 @@ export async function likesHandler() {
         likes: Number(this.params.currentLikes) + 1
     }, this.params.id);
 
+    toastr.success("You liked the trek successfully.")
+
     this.redirect(`#/details/${this.params.id}`);
 
     return false;
