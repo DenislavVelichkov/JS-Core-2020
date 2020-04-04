@@ -1,12 +1,12 @@
 {
-  "name": "manager",
+  "name": "Exam-App",
   "version": "1.0.0",
   "description": "This is solution for softuni related task",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Xapuu",
+  "author": "d.velichkov",
   "license": "ISC",
   "dependencies": {
     "bootstrap": "^4.4.1",

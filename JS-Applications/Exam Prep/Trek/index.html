@@ -1,43 +1,57 @@
 <!doctype html>
 <html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="css/styles.css">
-    <link rel="stylesheet" type="text/css" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
-    <script src="node_modules/jquery/dist/jquery.min.js"></script>
-    <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="node_modules/handlebars/dist/handlebars.min.js"></script>
-    <script src="node_modules/sammy/lib/min/sammy-0.7.6.min.js"></script>
-    <script src="node_modules/sammy/lib/min/plugins/sammy.handlebars-0.7.6.min.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/7.12.0/firebase-app.js"></script>
-    <script defer src="https://www.gstatic.com/firebasejs/7.12.0/firebase-auth.js"></script>
 
-    <script>
-        // Your web app's Firebase configuration
-        var firebaseConfig = {
-            apiKey: "AIzaSyCI1gMB4Gnpj_UmERhpSWga6i7n204JLoo",
-            authDomain: "exam-e8076.firebaseapp.com",
-            databaseURL: "https://exam-e8076.firebaseio.com",
-            projectId: "exam-e8076",
-            storageBucket: "exam-e8076.appspot.com",
-            messagingSenderId: "79733112433",
-            appId: "1:79733112433:web:8b4960833f53c7f00125d0"
-        };
-        // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
-    </script>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" type="text/css" href="css/styles.css">
+        <link rel="stylesheet" type="text/css" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css"
+            href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+        <script src="node_modules/jquery/dist/jquery.min.js"></script>
+        <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+        <script src="node_modules/sammy/lib/min/sammy-0.7.6.min.js"></script>
+        <script src="node_modules/handlebars/dist/handlebars.min.js"></script>
+        <script src="node_modules/sammy/lib/min/plugins/sammy.handlebars-0.7.6.min.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.12.0/firebase-app.js"></script>
+        <script defer src="https://www.gstatic.com/firebasejs/7.12.0/firebase-auth.js"></script>
 
-    <script type="module" src="app/app.js"></script>
-    <title>Exam App</title>
-</head>
-<body>
-<div id="infoBox" class="notification" disabled></div>
-<div id="errorBox" class="notification" disabled></div>
 
-<div id="notifications"></div>
-<div id="main">
 
-</div>
-</body>
+
+        <script>
+            // Your web app's Firebase configuration
+            var firebaseConfig = {
+                apiKey: "AIzaSyCI1gMB4Gnpj_UmERhpSWga6i7n204JLoo",
+                authDomain: "exam-e8076.firebaseapp.com",
+                databaseURL: "https://exam-e8076.firebaseio.com",
+                projectId: "exam-e8076",
+                storageBucket: "exam-e8076.appspot.com",
+                messagingSenderId: "79733112433",
+                appId: "1:79733112433:web:8b4960833f53c7f00125d0"
+            };
+            // Initialize Firebase
+            firebase.initializeApp(firebaseConfig);
+
+            toastr.options = {
+                "positionClass": "toast-top-center",
+            }
+
+        </script>
+
+        <script type="module" src="app/app.js"></script>
+        <title>Exam App</title>
+    </head>
+
+    <body>
+        <div id="infoBox" class="notification" disabled></div>
+        <div id="errorBox" class="notification" disabled></div>
+
+        <div id="notifications"></div>
+        <div id="main">
+
+        </div>
+    </body>
+
 </html>

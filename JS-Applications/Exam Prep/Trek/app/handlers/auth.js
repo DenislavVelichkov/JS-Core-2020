@@ -2,7 +2,6 @@ import { createFormEntity } from '../utils/formData.js';
 import { applyCommon } from './common.js';
 import { requester } from '../services/authService.js';
 import { NO_VALUE } from '../utils/constants.js';
-
 /**
  * Logs user
  */
@@ -12,7 +11,6 @@ export async function loginHandler() {
      */
     await applyCommon.call(this);
     await this.partial('./templates/login/loginPage.hbs');
-
     /**
      * Handling form events part
      */
@@ -26,7 +24,9 @@ export async function loginHandler() {
         /**
          * Authenticates a user with email and password
          */
-        const loggedInUser = await firebase.auth().signInWithEmailAndPassword(formValue.email, formValue.password);
+        const loggedInUser = await firebase.auth().signInWithEmailAndPassword(formValue.email, formValue.password)
+        .catch(err => toastr.error(new Error("Incorrect credentials!")));
+
         const userToken = await firebase.auth().currentUser.getIdToken();
         sessionStorage.setItem('email', loggedInUser.user.email);
         sessionStorage.setItem('userId', firebase.auth().currentUser.uid);
@@ -37,6 +37,7 @@ export async function loginHandler() {
         sessionStorage.setItem('token', userToken);
         requester.setAuthToken(userToken);
 
+        toastr.info("Successfully logged in!")
 
         this.redirect(['#/home']);
     });
