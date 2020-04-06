@@ -14,9 +14,7 @@ export const RestClient = (apiKey, collectionName, token) => {
 
     let collectionUrl = apiKey + collectionName;
 
-    /**
-     * Returns all elements from firebase database collection
-     */
+
     const getAll = () => {
         return fetch(collectionUrl + '.json' + (token ? `?auth=${token}`:''))
         .then(x => x.json());

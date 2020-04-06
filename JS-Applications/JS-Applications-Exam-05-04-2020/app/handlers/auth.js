@@ -1,28 +1,20 @@
-import { createFormEntity } from '../utils/formData.js';
-import { applyCommon } from './common.js';
-import { requester } from '../services/authService.js';
-/**
- * Logs user
- */
+import {createFormEntity} from '../utils/formData.js';
+import {applyCommon} from './common.js';
+import {requester} from '../services/authService.js';
+
 export async function loginHandler() {
-    /**
-     * Load hbs templates
-     */
+
     await applyCommon.call(this);
     await this.partial('./templates/login/loginPage.hbs');
-    /**
-     * Handling form events part
-     */
-    let formRef = document.querySelector('form');
+
+    let formRef = document.querySelector('.container.auth form');
     formRef.addEventListener('submit', async e => {
         e.preventDefault();
 
         let form = createFormEntity(formRef, ['email', 'password']);
         let formValue = form.getValue();
 
-        /**
-         * Authenticates a user with email and password
-         */
+
         const loggedInUser = await firebase.auth().signInWithEmailAndPassword(formValue.email, formValue.password)
             .catch(() => toastr.error(new Error("Incorrect credentials!")));
 
@@ -30,9 +22,7 @@ export async function loginHandler() {
         sessionStorage.setItem('email', loggedInUser.user.email);
         sessionStorage.setItem('userId', firebase.auth().currentUser.uid);
 
-        /**
-         * Updates the requester authentication token
-         */
+
         sessionStorage.setItem('token', userToken);
         requester.setAuthToken(userToken);
 
@@ -42,19 +32,13 @@ export async function loginHandler() {
     });
 }
 
-/**
- * Registers user
- */
+
 export async function registerViewHandler() {
-    /**
-     * Load hbs templates
-     */
+
     await applyCommon.call(this);
     await this.partial('./templates/register/registerPage.hbs');
 
-    /**
-     * Handling form events part
-     */
+
     let formRef = document.querySelector('form');
     formRef.addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -76,9 +60,7 @@ export async function registerViewHandler() {
         }
 
         toastr.success("Successfully registered user!")
-        /**
-         * Creates new user
-         */
+
         const newUser = await firebase.auth().createUserWithEmailAndPassword(formValue.email, formValue.password);
 
         let userToken = await firebase.auth().currentUser.getIdToken();
@@ -86,25 +68,19 @@ export async function registerViewHandler() {
         sessionStorage.setItem('userId', firebase.auth().currentUser.uid);
 
         sessionStorage.setItem('token', userToken);
-        /**
-         * Updates the requester authentication token
-         */
-        requester.setAuthToken(userToken);
 
+        requester.setAuthToken(userToken);
 
         this.redirect(['#/home']);
     });
 
 }
 
-/**
- * Signs out user
- */
 export function logoutHandler() {
     sessionStorage.clear();
     firebase.auth().signOut()
 
     toastr.success("Logout successful.")
 
-    this.redirect(['#/home']);
+    this.redirect(['#/login']);
 }
