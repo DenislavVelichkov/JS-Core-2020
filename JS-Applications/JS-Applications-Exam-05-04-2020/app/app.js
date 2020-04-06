@@ -26,7 +26,7 @@ const app = Sammy('#main', function () {
     this.get('#/logout', logoutHandler);
 
     this.get('#/login', loginHandler);
-    this.post('#/login', () => false);
+    this.post('#/login', () => false);K
 
     this.get('#/create', createAssetHandler);
     this.post('#/create', () => false);
