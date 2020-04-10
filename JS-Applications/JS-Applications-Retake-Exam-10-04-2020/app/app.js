@@ -1,56 +1,41 @@
-import { requester } from './services/authService.js'
+import {requester} from './services/authService.js';
 import {
-  deleteHandler,
-  detailsHandler,
-  editHandler,
-  homeViewHandler,
-  loginHandler,
-  logoutHandler,
-  registerViewHandler
-} from './handlers/index.js'
+    createAssetHandler,
+    deleteHandler,
+    detailsHandler,
+    editHandler,
+    homeViewHandler,
+    loginHandler,
+    logoutHandler,
+    registerViewHandler
+} from './handlers/index.js';
 
-const apiKey = 'https://exam-e8076.firebaseio.com/'
-requester.init(apiKey, sessionStorage.getItem('token'))
+const apiKey = 'https://exam-e8076.firebaseio.com/';
+requester.init(apiKey, sessionStorage.getItem('token'));
 
 const app = Sammy('#root', function () {
-  this.use('Handlebars', 'hbs')
 
-  this.get('#/', homeViewHandler)
-  this.get('#/home', homeViewHandler)
+    this.use('Handlebars', 'hbs');
 
-  this.get('#/register', registerViewHandler)
-  this.post('#/register', () => false)
+    this.get('#/', homeViewHandler);
+    this.get('#/home', homeViewHandler);
 
-  this.get('#/logout', logoutHandler)
+    this.get('#/register', registerViewHandler);
+    this.post('#/register', () => false);
 
-  this.get('#/login', loginHandler)
-  this.post('#/login', () => false)
+    this.get('#/logout', logoutHandler);
 
-  this.post('#/create-post', async function (ctx) {
-    let formRef = document.querySelector('.background-container form')
+    this.get('#/login', loginHandler);
+    this.post('#/login', () => false);
 
-    formRef.addEventListener('submit', e => {
-        console.log("Hello")
-      let form = createFormEntity(formRef, ['title', 'category', 'content'])
-      let formValue = form.getValue()
+    this.post('#/create-post', createAssetHandler);
 
-      formValue.createdByName = sessionStorage.getItem('email')
+    this.get('#/details/:id', detailsHandler);
 
-      requester.asset.createEntity(formValue)
-      toastr.success('Post created successfully.')
+    this.get('#/edit/:id', editHandler);
+    this.post('#/edit/:id', () => false);
 
-      form.clear()
+    this.get('#/delete/:id', deleteHandler);
+});
 
-      ctx.redirect(['#/home'])
-    })
-  })
-
-  this.get('#/details/:id', detailsHandler)
-
-  this.get('#/edit/:id', editHandler)
-  this.post('#/edit/:id', () => false)
-
-  this.get('#/delete/:id', deleteHandler)
-})
-
-app.run('#/')
+app.run('#/');
